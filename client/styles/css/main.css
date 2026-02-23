@@ -1,0 +1,15 @@
+.hidden {
+    display: none;
+}
+
+.error {
+    color: red;
+    border-radius: 0.3em;
+    border-color: red;
+}
+
+.success {
+    color: green;
+    border-radius: 0.3em;
+    border-color: green;
+}

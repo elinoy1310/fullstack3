@@ -1,26 +1,49 @@
-/*
-📄 app.js
+const App = (function () {
 
-Role: Main application controller.
-Communicates with: router.js, api.js
+    let currentUser = null;
+    
+    function init() {
+        const route = window.location.hash.replace("#", "");
 
-Responsibilities:
+        if (route) {
+            Router.render(route);
+        }
+        
+        window.onhashchange = function () {
 
-Maintain current logged-in user
+            const newRoute = window.location.hash.replace("#", "");
+            console.log( window.location.hash);
 
-Initialize application
 
-Handle logout
+                Router.render(newRoute);
 
-Start router
+        };
 
-Important components:
 
-initApp()
+        const loginBtn = document.getElementById("login-btn");
+        loginBtn.addEventListener("click", function () {
+            Router.navigate("login");
+        });
+        const registerBtn = document.getElementById("register-btn");
+        registerBtn.addEventListener("click", function () {
+            Router.navigate("register");
+        });
+    }
 
-setCurrentUser(user)
+    function setUser(user) {
+        currentUser = user;
+    }
 
-getCurrentUser()
+    function getUser() {
+        return currentUser;
+    }
 
-logout()
-*/
+    return {
+        init,
+        setUser,
+        getUser
+    };
+
+})();
+
+document.addEventListener("DOMContentLoaded", function () {App.init();});
