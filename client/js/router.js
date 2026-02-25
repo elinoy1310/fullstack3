@@ -36,6 +36,10 @@ const Router = (function () {
         register: {
             templateId: "register-template",
             viewInit: () => RegisterView.init()
+        },
+        recipes: {
+            templateId: "recipes-template",
+            viewInit: () => RecipesView.init()
         }
     };
 

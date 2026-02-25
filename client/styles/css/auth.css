@@ -1,0 +1,90 @@
+/* styles/css/auth.css */
+
+.auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background-color: var(--card-bg);
+    border-radius: 1rem; /* xl */
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(238, 108, 43, 0.1);
+}
+
+.auth-container h2 {
+    font-size: 1.875rem;
+    font-weight: 900;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-color);
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.auth-container input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.2);
+}
+
+.auth-container button[type="submit"], 
+.auth-container button#loginBtn {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
+    transition: background 0.2s ease;
+}
+
+.auth-container button[type="submit"]:hover, 
+.auth-container button#loginBtn:hover {
+    background-color: var(--primary-hover);
+}
+
+#register-navigator, #login-navigator, #success-login-navigator {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+#register-navigator button, #login-navigator button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 0.25rem;
+}
+
+#register-navigator button:hover, #login-navigator button:hover {
+    text-decoration: underline;
+}
+
+#goLoginBtn {
+    background-color: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}

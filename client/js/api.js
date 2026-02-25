@@ -50,6 +50,14 @@ const API = {
 
     login: function(username, password, callback) {
         sendRequest("POST", "/#login", { username, password, server:AUTH_SERVER_NAME }, callback);
+    },
+    
+    getAllRecipes: function(callback) {
+        sendRequest("GET", "/#recipes", null, callback);
+    },
+
+    createRecipe: function(recipeData, callback) {
+        sendRequest("POST", "/#recipes", recipeData, callback);
     }
 
 };
@@ -83,3 +91,4 @@ function sendRequest(method, url, data, callback) {
 
     xhr.send(JSON.stringify(data));
 }
+

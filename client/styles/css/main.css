@@ -1,15 +1,82 @@
-.hidden {
-    display: none;
+/* styles/css/main.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #ee6c2b;
+    --primary-hover: #d65a1f;
+    --bg-color: #f8f6f6;
+    --text-color: #0f172a;
+    --text-muted: #64748b;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
 }
 
+body {
+    font-family: "Plus Jakarta Sans", "Noto Sans Hebrew", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    /*direction: rtl; */
+}
+
+header {
+    background-color: rgba(248, 246, 246, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(238, 108, 43, 0.1);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+#app, #entry-point {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+#entry-point { text-align: center; margin-top: 5rem; }
+#entry-point button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.5rem;
+}
+
+.hidden { display: none !important; }
+
 .error {
-    color: red;
-    border-radius: 0.3em;
-    border-color: red;
+    color: #dc2626;
+    background-color: #fee2e2;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #fecaca;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
 }
 
 .success {
-    color: green;
-    border-radius: 0.3em;
-    border-color: green;
+    color: #16a34a;
+    background-color: #dcfce7;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #bbf7d0;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
 }

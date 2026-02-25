@@ -28,6 +28,8 @@ Script imports -->
 
      <!-- need to add styles -->
     <link rel="stylesheet" href="styles/css/main.css">
+    <link rel="stylesheet" href="styles/css/auth.css">
+    <link rel="stylesheet" href="styles/css/recipes.css">
 </head>
 <body>
     <header>
@@ -78,17 +80,41 @@ Script imports -->
     </div>
     </div>
 </template>
+
+<template id="recipes-template">
+    <div id="recipes-header">
+        <h2>Our Recipes</h2>
+        <button id="add-recipe-btn">+ Add New Recipe</button>
+    </div>
+    <div id="recipes-list" class="recipes-grid">
+        </div>
+</template>
+
+<template id="recipe-card-template">
+    <div class="recipe-card">
+        <h3 class="recipe-title"></h3>
+        <p class="recipe-description"></p>
+        <div class="recipe-actions">
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+        </div>
+    </div>
+</template>
+
 <script src="js/app.js"></script>
 <script src="js/router.js"></script>
 
-<script src="../server/network.js"></script>
-<script src="../server/authServer.js"></script>
 <script src="../db/usersDB.js"></script>
+<script src="../db/receipesDB.js"></script>
+
+<script src="../server/authServer.js"></script>
+<script src="../server/recipesServer.js"></script>
+<script src="../server/network.js"></script>
 
 <script src="js/fajax.js"></script>
 <script src="js/api.js"></script>
 <script src="js/views/loginView.js"></script>
 <script src="js/views/registerView.js"></script>
-
+<script src="js/views/recipesView.js"></script>
 </body>
 </html>
