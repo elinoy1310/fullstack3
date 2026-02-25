@@ -12,11 +12,7 @@ const App = (function () {
         window.onhashchange = function () {
 
             const newRoute = window.location.hash.replace("#", "");
-            console.log( window.location.hash);
-
-
-                Router.render(newRoute);
-
+            Router.render(newRoute);
         };
 
 

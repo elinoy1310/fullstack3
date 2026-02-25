@@ -1,60 +1,65 @@
-/* js/views/loginView.js */
-const LoginView = (function () {
+const LoginView = {
 
-    function init() {
-        const loginBtn = document.getElementById("loginBtn");
-        const goRegisterBtn = document.getElementById("goRegister");
-        const messageEl = document.getElementById("login-message");
+    // init() {
 
-        if (loginBtn) {
-            loginBtn.addEventListener("click", function (e) {
-                e.preventDefault(); 
+    //     document.getElementById("loginBtn").onclick = async () => {
 
-                const emailEl = document.getElementById("login-email");
-                const passwordEl = document.getElementById("login-password");
-                
-                if (!emailEl || !passwordEl) {
-                    console.error("error finding email or password input elements");
-                    return;
+    //         const username = document.getElementById("login-username").value;
+    //         const password = document.getElementById("login-password").value;
+    //         const messageEl = document.getElementById("login-message");
+
+    //         messageEl.innerText = "Loading...";
+
+    //         const response = await API.login(username, password);
+
+    //         if (response.status === 200) {
+    //             App.setUser(response.body.data);
+    //             messageEl.innerText = "Login success!";
+    //             // בהמשך ננווט למסך recipes
+    //         } 
+    //         else if (response.status === 0) {
+    //             messageEl.innerText = "Network error. Try again.";
+    //         }
+    //         else {
+    //             messageEl.innerText = response.body.message;
+    //         }
+    //     };
+
+    //     document.getElementById("goRegister").onclick = () => {
+    //         Router.navigate("register");
+    //     };
+    // }
+    init() {
+
+        document.getElementById("loginBtn").onclick = function () {
+
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+            const messageEl = document.getElementById("login-message");
+
+            messageEl.innerText = "Loading...";
+
+            API.login(username, password, function (response) {
+
+                if (response.status === 200) {
+                    App.setUser(response.body.data);
+                    messageEl.innerText = "Login success!";
+                } 
+                else if (response.status === 0) {
+                    messageEl.innerText = "Network error. Try again.";
+                } 
+                else {
+                    messageEl.innerText = response.body.message;
                 }
 
-                const email = emailEl.value;
-                const password = passwordEl.value;
+        });
 
-                messageEl.textContent = "connecting...";
-                messageEl.className = "";
+    };
 
-                API.login(email, password, function (response) {
-                    if (response && response.status === 200) {
-                        messageEl.textContent = " logged in successfully!";
-                        messageEl.className = "success";
-                        
-                        const userData = response.body.data;
-                        App.setUser(userData);
-                        
-                        //continue to recipes after a short delay to show the success message
-                        setTimeout(() => {
-                            Router.navigate("recipes");
-                        }, 500);
-                        
-                    } else {
-                        const errorMsg = response && response.body && response.body.message 
-                                         ? response.body.message 
-                                         : "connect error. Please try again.";
-                        messageEl.textContent = errorMsg;
-                        messageEl.className = "error";
-                    }
-                });
-            });
-        }
-
-        if (goRegisterBtn) {
-            goRegisterBtn.addEventListener("click", function (e) {
-                e.preventDefault();
-                Router.navigate("register");
-            });
-        }
-    }
+    document.getElementById("goRegister").onclick = function () {
+        Router.navigate("register");
+    };
+}
 
     return { init };
 })();

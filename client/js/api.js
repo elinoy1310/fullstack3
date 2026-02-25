@@ -44,20 +44,11 @@ const RECIPES_SERVER_NAME="recipes";
 const API = {
 
     register: function(username, email, password, callback) {
-        // הפנייה ל-sendRequest עם callback
-        sendRequest("POST", "/#register", { username, email, password ,server:AUTH_SERVER_NAME}, callback);
+        sendRequest("POST", "/register", { username, email, password ,server:AUTH_SERVER_NAME}, callback);
     },
 
     login: function(username, password, callback) {
         sendRequest("POST", "/#login", { username, password, server:AUTH_SERVER_NAME }, callback);
-    },
-    
-    getAllRecipes: function(callback) {
-        sendRequest("GET", "/#recipes", null, callback);
-    },
-
-    createRecipe: function(recipeData, callback) {
-        sendRequest("POST", "/#recipes", recipeData, callback);
     }
 
 };
