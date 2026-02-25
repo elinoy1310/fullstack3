@@ -20,15 +20,14 @@ Return JSON response
 const AuthServer = (function () {
 
     function handleRequest(request) {
-        console.log("AuthServer received request:", request);
 
         const { method, url, body } = request;
 
-        if (method === "POST" && url === "/#register") {
+        if (method === "POST" && url === "/register") {
             return register(JSON.parse(body));
         }
 
-        if (method === "POST" && url === "/#login") {
+        if (method === "POST" && url === "/login") {
             return login(JSON.parse(body));
         }
 
@@ -65,10 +64,13 @@ const AuthServer = (function () {
 
     function login(data) {
 
-        const user = UsersDB.getByUsername(data.username);
+        const user = UsersDB.getByUsername(data.email);
 
-        if (!user || user.password !== data.password) {
-            return error("Invalid credentials");
+        if (!user) {
+            return error("Invalid credentials: user not found");
+        }
+        if (user.password !== data.password) {
+            return error("Invalid credentials: wrong password");
         }
 
         return success(user);

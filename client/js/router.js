@@ -36,7 +36,12 @@ const Router = (function () {
         register: {
             templateId: "register-template",
             viewInit: () => RegisterView.init()
+        },
+        recipes: {
+            templateId: "recipes-template",
+            viewInit: () => RecipesView.init()
         }
+
     };
 
     function navigate(route) {
@@ -45,6 +50,7 @@ const Router = (function () {
     }
 
     function render(route) {
+        console.log("go to "+route)
         const routeConfig = routes[route || "home"];
         if (!routeConfig ) return;
         

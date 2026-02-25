@@ -35,6 +35,7 @@ const UsersDB = (function () {
     function create(user) {
         const users = getAll();
         user.id = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1; 
+        user.receipesList = [];
         users.push(user);
         save(users);
         return {userId: user.id};
