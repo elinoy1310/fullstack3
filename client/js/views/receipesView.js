@@ -9,6 +9,7 @@ const RecipesView = {
                 <p>Email: ${user.email}</p>
                 <p>User ID: ${user.id}</p>
                 <p>User receipes list ids: ${user.receipesList}</p>
+                <p>User favorites receipes list ids: ${user.favoritesReceipesList}</p>
             `;
         } else {
             replaceEl.innerHTML = `<p>User data not found. Please log in.</p>`;
