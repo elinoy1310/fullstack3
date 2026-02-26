@@ -47,8 +47,8 @@ const API = {
         sendRequest("POST", "/register", { username, email, password ,server:AUTH_SERVER_NAME}, callback);
     },
 
-    login: function(username, password, callback) {
-        sendRequest("POST", "/#login", { username, password, server:AUTH_SERVER_NAME }, callback);
+    login: function(email, password, callback) {
+        sendRequest("POST", "/login", { email, password, server:AUTH_SERVER_NAME }, callback);
     }
 
 };

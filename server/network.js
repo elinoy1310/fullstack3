@@ -39,7 +39,7 @@ const Network = (function () {
             }
 // how to route to correct server: authServer or recipesServer? 
             let response;
-            if (request.url === "/#login" || request.url === "/#register") {
+            if (request.url === "/login" || request.url === "/register") {
                 response = AuthServer.handleRequest(request);
             } else {
                 response = RecipesServer.handleRequest(request);

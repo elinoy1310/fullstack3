@@ -1,60 +1,46 @@
-/* js/views/loginView.js */
-const LoginView = (function () {
+const LoginView = {
 
-    function init() {
-        const loginBtn = document.getElementById("loginBtn");
-        const goRegisterBtn = document.getElementById("goRegister");
-        const messageEl = document.getElementById("login-message");
+    init() {
 
-        if (loginBtn) {
-            loginBtn.addEventListener("click", function (e) {
-                e.preventDefault(); 
+        document.getElementById("loginForm").onsubmit = function (e) {
+            e.preventDefault();
+            console.log("Login form submitted");
+            
 
-                const emailEl = document.getElementById("login-email");
-                const passwordEl = document.getElementById("login-password");
-                
-                if (!emailEl || !passwordEl) {
-                    console.error("error finding email or password input elements");
-                    return;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
+            const messageEl = document.getElementById("login-message");
+
+            console.log("Login form data:", { email, password });
+
+            messageEl.className = "";
+            messageEl.innerText = "Loading...";
+
+            API.login(email, password, function (response) {
+                console.log("Login API response:", response);
+
+                if (response.status === 200) {
+                    App.setUser(response.body.data); //check what data contains maybe we need only the id : change if needded after the charactarization of the main page of the receipes
+                    messageEl.classList.add("success");
+                    messageEl.innerText = "Login success!";
+                    setTimeout(() => {
+                        Router.navigate("recipes");
+                    }, 1000);
+                } 
+                else if (response.status === 0) {
+                    messageEl.classList.add("error");
+                    messageEl.innerText = "Network error. Try again.";
+                } 
+                else {
+                    messageEl.classList.add("error");
+                    messageEl.innerText = response.body.message;
                 }
 
-                const email = emailEl.value;
-                const password = passwordEl.value;
+        });
 
-                messageEl.textContent = "connecting...";
-                messageEl.className = "";
+    };
 
-                API.login(email, password, function (response) {
-                    if (response && response.status === 200) {
-                        messageEl.textContent = " logged in successfully!";
-                        messageEl.className = "success";
-                        
-                        const userData = response.body.data;
-                        App.setUser(userData);
-                        
-                        //continue to recipes after a short delay to show the success message
-                        setTimeout(() => {
-                            Router.navigate("recipes");
-                        }, 500);
-                        
-                    } else {
-                        const errorMsg = response && response.body && response.body.message 
-                                         ? response.body.message 
-                                         : "connect error. Please try again.";
-                        messageEl.textContent = errorMsg;
-                        messageEl.className = "error";
-                    }
-                });
-            });
-        }
+    document.getElementById("goRegister").onclick = function () {Router.navigate("register");};
+}
 
-        if (goRegisterBtn) {
-            goRegisterBtn.addEventListener("click", function (e) {
-                e.preventDefault();
-                Router.navigate("register");
-            });
-        }
-    }
-
-    return { init };
-})();
+};
