@@ -28,10 +28,12 @@ Script imports -->
 
      <!-- need to add styles -->
     <link rel="stylesheet" href="styles/css/main.css">
+    <link rel="stylesheet" href="styles/css/receipes.css">
 </head>
 <body>
     <header>
         <h1>Recipe4you</h1>
+        <button id="logoutBtn" class="hidden">Logout</button>
     </header>
 <div id="app"></div>
 <div id="entry-point">
@@ -83,9 +85,22 @@ Script imports -->
 
 <!-- RECIPES TEMPLATE -->
 <template id="recipes-template">
-    <div id="replace-later">
-        <p>Recipes screen - to be implemented</p>
-        <p> user Data:</p>
+    <div class="recipes-page">
+
+        <header class="recipes-header">
+            <h2 id="welcomeMessage"></h2>
+        </header>
+
+        <main class="recipes-content">
+            <div id="recipesContainer">
+                <p id="emptyState">There are no recipes yet.</p>
+            </div>
+        </main>
+
+        <button id="addRecipeBtn" class="floating-add-btn">
+            + Add Recipe
+        </button>
+
     </div>
 </template>
 <script src="js/app.js"></script>
