@@ -43,7 +43,6 @@ const RecipesServer = (function () {
         };
     }
     function create(data) {
-        console.log("RecipesServer.create", data);
         if (!data.title || !data.instructions) {
             return error("Missing fields");
         }

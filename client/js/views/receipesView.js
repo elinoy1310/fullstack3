@@ -44,10 +44,7 @@ const RecipesView = {
 
         document.getElementById("addRecipeBtn")
             .onclick = function () {
-                console.log("Add recipe clicked - to be implemented");
                 addRecipeView.init();
-
-
             };
 
 
@@ -80,19 +77,6 @@ const addRecipeView = {
         document.getElementById("addRecipeBtn").classList.add("hidden");
     },
     renderCategories() {
-    // const container = document.getElementById("categoriesContainer");
-    // container.innerHTML = "";
-
-    // RECIPE_CATEGORIES.forEach(category => {
-    //     const label = document.createElement("label");
-
-    //     label.innerHTML = `
-    //         <input type="checkbox" value="${category}">
-    //         ${category}
-    //     `;
-
-    //     container.appendChild(label);
-    // });
 
     const container = document.getElementById("categoriesContainer");
     container.innerHTML = ""; // נקי לפני יצירה

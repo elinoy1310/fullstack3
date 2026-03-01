@@ -20,7 +20,6 @@ Return JSON response
 const AuthServer = (function () {
 
     function handleRequest(request) {
-        console.log("AuthServer received request:", request);
 
         const { method, url, body } = request;
 

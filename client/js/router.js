@@ -50,7 +50,6 @@ const Router = (function () {
     }
 
     function render(route) {
-        console.log("go to "+route)
         const routeConfig = routes[route || "home"];
         if (!routeConfig ) return;
         

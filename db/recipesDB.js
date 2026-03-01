@@ -36,7 +36,6 @@ const RecipesDB = (function () {
         recipe.id = recipes.length > 0 ? Math.max(...recipes.map(r => r.id)) + 1 : 1; 
         recipes.push(recipe);
         save(recipes);
-        console.log("RecipesDB.create", recipe);
     }
 
     return {
