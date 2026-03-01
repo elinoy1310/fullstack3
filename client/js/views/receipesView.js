@@ -77,6 +77,7 @@ const addRecipeView = {
             e.preventDefault();
             addRecipeView.saveRecipe();
         };
+        document.getElementById("addRecipeBtn").classList.add("hidden");
     },
     renderCategories() {
     // const container = document.getElementById("categoriesContainer");
@@ -131,6 +132,7 @@ const addRecipeView = {
             if (!confirm("Discard changes?")) return;
         }
         document.getElementById("addRecipeOverlay").classList.add("hidden");
+        document.getElementById("addRecipeBtn").classList.remove("hidden");
         addRecipeView.resetForm();
     },
 

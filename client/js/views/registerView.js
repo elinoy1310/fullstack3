@@ -41,9 +41,11 @@ const RegisterView = {
                     messageEl.className = "error";
                     // חייבים לפענח את ה-JSON שחוזר מהשרת לפני שקוראים את ה-message
                     try {
-                        const bodyData = JSON.parse(response.body);
+                        console.log("Register error response:", response);
+                        const bodyData = response.body;
                         messageEl.innerText = bodyData.message || "Registration failed.";
                     } catch (err) {
+                        console.log("Error parsing register error response:", err);
                         messageEl.innerText = "Registration failed.";
                     }
                 }

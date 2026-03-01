@@ -21,10 +21,15 @@
 
 .overlay {
     position: fixed;
-    inset: 0;
+    top: 70px; /* גובה ה-header שלך */
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0,0,0,0.5);
     justify-content: center;
     align-items: center;
+    display: none; /* ברירת מחדל */
+    z-index: 100; /* מעל כל תוכן אך מתחת ל-header אם צריך */
 }
 
 .overlay:not(.hidden) {
@@ -36,11 +41,13 @@
     background: white;
     width: 90%;
     max-width: 600px;
-    max-height: 90vh;
+    max-height: 75vh;
     overflow-y: auto;
     border-radius: 8px;
     padding: 20px;
 }
+
+
 
 .modal-header{
     display: flex;
