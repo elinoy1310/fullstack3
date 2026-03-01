@@ -25,38 +25,48 @@ Required fields
 
 Ownership (userId match)
 */
-/* server/recipesServer.js */
+
+
 const RecipesServer = (function () {
 
     function handleRequest(request) {
-        console.log("RecipesServer received request:", request);
+
         const { method, url, body } = request;
 
-        if (method === "GET" && url === "/#recipes") {
-            const recipes = RecipesDB.getAll();
-            return success(recipes);
+        if (method === "POST" && url === "/recipes/add") {
+            return create(JSON.parse(body));
         }
 
-        if (method === "POST" && url === "/#recipes") {
-            const data = JSON.parse(body);
-            const newRecipe = RecipesDB.create(data);
-            return success(newRecipe);
+        return {
+            status: 404,
+            body: JSON.stringify({ message: "Not found" })
+        };
+    }
+    function create(data) {
+        console.log("RecipesServer.create", data);
+        if (!data.title || !data.instructions) {
+            return error("Missing fields");
         }
-
-        return error("Endpoint not found in RecipesServer");
+    RecipesDB.create(data)
+    return success()
     }
 
-    function success(data) {
+    function success() {
         return {
             status: 200,
-            body: JSON.stringify({ status: "success", data })
+            body: JSON.stringify({
+                status: "success"
+            })
         };
     }
 
     function error(message) {
         return {
             status: 400,
-            body: JSON.stringify({ status: "error", message })
+            body: JSON.stringify({
+                status: "error",
+                message
+            })
         };
     }
 
