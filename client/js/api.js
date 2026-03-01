@@ -38,22 +38,26 @@ This keeps views clean.
 
 // };
 
-const AUTH_SERVER_NAME="auth";
-const RECIPES_SERVER_NAME="recipes";
 
 const API = {
 
     register: function(username, email, password, callback) {
-        sendRequest("POST", "/register", { username, email, password ,server:AUTH_SERVER_NAME}, callback);
+        sendRequest("POST", "/register", { username, email, password ,server:Network.AUTH_SERVER_NAME}, callback);
     },
 
     login: function(email, password, callback) {
-        sendRequest("POST", "/login", { email, password, server:AUTH_SERVER_NAME }, callback);
+        sendRequest("POST", "/login", { email, password, server:Network.AUTH_SERVER_NAME }, callback);
+    },
+
+    createRecipe: function(recipeData, callback) {
+        sendRequest("POST", "/recipes/add", { ...recipeData, server:Network.RECIPES_SERVER_NAME }, callback);
     }
 
 };
 
+
 function sendRequest(method, url, data, callback) {
+    console.log("API.sendRequest", { method, url, data });
 
     const xhr = new FXMLHttpRequest();
 

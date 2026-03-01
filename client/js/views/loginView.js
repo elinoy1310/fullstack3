@@ -14,6 +14,7 @@ const LoginView = {
             messageEl.innerText = "Loading...";
 
             API.login(email, password, function (response) {
+                console.log("Login response:", response);
 
                 if (response.status === 200) {
                     App.setUser(response.body.data); //check what data contains maybe we need only the id : change if needded after the charactarization of the main page of the receipes

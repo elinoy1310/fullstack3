@@ -4,12 +4,12 @@
 
 .error {
     color: red;
-    border-radius: 0.3em;
-    border: red solid 1px;
+   
 }
 
 .success {
     color: green;
-    border-radius: 0.3em;
-    border: green solid 1px;
+    
+   
 }
+
