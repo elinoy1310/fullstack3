@@ -169,11 +169,14 @@ Script imports -->
             <button id="addRecipeBtn" class="floating-add-btn">
                 + Add Recipe
             </button>
-            <!-- temporary button need to change after recipe full view is completed -->
+            <!-- temporary buttons need to change after recipe full view is completed -->
             <input type="number" id="editRecipeIdInput" placeholder="Recipe ID">
             <button onclick="editRecipeView.init(parseInt(document.getElementById('editRecipeIdInput').value))">
                 Edit Recipe
             </button>
+            <input type="number" id="deleteRecipeIdInput" placeholder="Recipe ID">
+            <button id="deleteRecipeBtn" onclick="RecipesView.deleteRecipe(parseInt(document.getElementById('deleteRecipeIdInput').value))">Delete Recipe</button>
+            <p id="deleteMessage"></p>
 
         </div>
     </template>

@@ -47,17 +47,58 @@ const RecipesView = {
                 addRecipeView.init();
             };
 
+        // ➖ DELETE Recipe  * temporary place to activate the function - need to change after recipe full view is completed
 
         // 📦 כרגע אין מתכונים – בעתיד נטעין
+    },
+
+    deleteRecipe(recipeId) {
+        if (!recipeId) {
+            alert("Please enter recipe ID");
+            return;
+        }
+        //after implementation of recipe full view we dont need to get the recipe again because we will have the data in the view, but for now we need to get the recipe to show the name in the confirm message
+        API.getRecipe(recipeId, function (response) {
+            const message = document.getElementById("deleteMessage");
+            if (response.status == 200) {
+                const recipe = response.body.data;
+
+                const confirmDelete = confirm(
+                    `Are you sure you want to delete "${recipe.title}"?`
+                );
+
+                if (!confirmDelete) return;
+                const messageEl = document.getElementById("deleteMessage");
+                messageEl.className = "";
+                messageEl.innerText = "Deleting...";
+                API.deleteRecipe(recipeId, function (response) {
+
+                    if (response.status === 200) {
+                        messageEl.className = "success";
+                        messageEl.innerText = `Recipe: ${recipe.title} deleted successfully!`;
+                    }
+                    else if (response.status === 0) {
+                        messageEl.className = "error";
+                        messageEl.innerText = "Network error";
+                    }
+                    else {
+                        messageEl.className = "error";
+                        messageEl.innerText = response.body.message;
+                    }
+                });
+            }
+            else if (response.status === 0) {
+                message.className = "error";
+                message.innerText = "Network error";
+            }
+            else {
+                message.className = "error";
+                message.innerText = response.body.message;
+            }
+
+        });
     }
-
-
-
-
-
-}
-
-
+};
 
 const addRecipeView = {
     init() {
@@ -259,6 +300,7 @@ const addRecipeView = {
     }
 
 }
+
 const editRecipeView = {
 
     originalData: null,
@@ -432,3 +474,4 @@ const editRecipeView = {
         this.currentRecipeId = null;
     }
 };
+

@@ -44,6 +44,10 @@ const RecipesServer = (function () {
             const id = parseInt(url.split("/")[2]);
             return getRecipe(id)
         };
+        if (method === "DELETE" && url.startsWith("/recipes/")) {
+            const id = parseInt(url.split("/")[2]);
+            return deleteRecipe(id);
+        }
 
         return {
             status: 404,
@@ -58,7 +62,16 @@ const RecipesServer = (function () {
         }
         return success(recipe);
     }
-    
+
+    //assumption: the recipeId is valid and exists in the db
+    function deleteRecipe(recipeId) {
+        const successDelete = RecipesDB.deleteRecipe(recipeId);
+        if (!successDelete) {
+            return error("Recipe not found or could not be deleted");
+        }
+        return success();
+    }
+
     function create(data) {
         if (!data.title || !data.instructions) {
             return error("Missing fields");

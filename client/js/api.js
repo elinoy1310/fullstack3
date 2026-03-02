@@ -57,6 +57,9 @@ const API = {
     },
     getRecipe: function (id, callback) {
         sendRequest("GET", "/recipes/" + id, null, callback);
+    },
+    deleteRecipe: function (id, callback) {
+        sendRequest("DELETE", "/recipes/" + id, null, callback);
     }
 
 };

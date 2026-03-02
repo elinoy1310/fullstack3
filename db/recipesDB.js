@@ -58,11 +58,25 @@ const RecipesDB = (function () {
         return recipes[index];
     }
 
+    function deleteRecipe(id) {
+
+        const recipes = getAll();
+        const filtered = recipes.filter(r => r.id !== id);
+
+        if (filtered.length === recipes.length) {
+            return false;
+        }
+
+        save(filtered);
+        return true;
+    }
+
     return {
         getAll,
         getByRecipeId,
         create,
-        update
+        update,
+        deleteRecipe
     };
 
 })();
