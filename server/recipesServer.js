@@ -40,6 +40,10 @@ const RecipesServer = (function () {
             const id = parseInt(url.split("/")[2]);
             return updateRecipe(id, JSON.parse(body));
         }
+        if (method === "GET" && url.startsWith("/recipes/")) {
+            const id = parseInt(url.split("/")[2]);
+            return getRecipe(id)
+        };
 
         return {
             status: 404,
@@ -47,6 +51,14 @@ const RecipesServer = (function () {
         };
     }
 
+    function getRecipe(id) {
+        const recipe = RecipesDB.getByRecipeId(id);
+        if (!recipe) {
+            return error("Recipe not found")
+        }
+        return success(recipe);
+    }
+    
     function create(data) {
         if (!data.title || !data.instructions) {
             return error("Missing fields");
@@ -63,10 +75,7 @@ const RecipesServer = (function () {
 
         const recipe = RecipesDB.getByRecipeId(id);
         if (!recipe) {
-            return {
-                status: 404,
-                body: JSON.stringify({ message: "Recipe not found" })
-            };
+            return error("Recipe not found")
         }
 
         const updated = RecipesDB.update(id, data);

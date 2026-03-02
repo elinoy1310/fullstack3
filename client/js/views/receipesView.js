@@ -266,30 +266,33 @@ const editRecipeView = {
 
     init(recipeId) {
 
-        //have to change to do it from api
-        const recipe = RecipesDB.getByRecipeId(recipeId);
-        // כרגע זמני – בהמשך תחליפי בשליפה מהשרת
+        API.getRecipe(recipeId, (response) => {
+            if (response.status === 200) {
+                const recipe = response.body.data;
+                this.currentRecipeId = recipeId;
+                this.originalData = JSON.stringify(recipe);
 
-        if (!recipe) {
-            alert("Recipe not found");
-            return;
-        }
+                this.currentRecipeId = recipeId;
+                this.originalData = JSON.stringify(recipe);
 
-        this.currentRecipeId = recipeId;
-        this.originalData = JSON.stringify(recipe);
+                const overlay = document.getElementById("addRecipeOverlay");
+                overlay.classList.remove("hidden");
 
-        const overlay = document.getElementById("addRecipeOverlay");
-        overlay.classList.remove("hidden");
+                document.getElementById("addRecipeBtn").classList.add("hidden");
+                // add for temp edit button - change this when recipe full view is implemented
+                document.getElementById("editRecipeIdInput").classList.add("hidden");
 
-        document.getElementById("addRecipeBtn").classList.add("hidden");
-        // add for temp edit button - change this when recipe full view is implemented
-        document.getElementById("editRecipeIdInput").classList.add("hidden");
+                this.fillForm(recipe);
+                this.bindEvents();
 
-        this.fillForm(recipe);
-        this.bindEvents();
-
-        document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
-        document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
+                document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
+                document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
+            } else {
+                //need to change to write in message in recipes full view: divide to network error : status==0 and else
+                alert("Failed to load recipe");
+                return;
+            }
+        });
     },
 
     fillForm(recipe) {
@@ -366,7 +369,7 @@ const editRecipeView = {
         delete original.id
         delete original.server
         const currentData = this.collectFormData();
-        return JSON.stringify(currentData) !==  JSON.stringify(original);
+        return JSON.stringify(currentData) !== JSON.stringify(original);
     },
 
     updateRecipe() {
@@ -392,7 +395,7 @@ const editRecipeView = {
             if (response.status === 200) {
                 message.className = "success";
                 message.innerText = "Recipe updated successfully!";
-                this.originalData= JSON.stringify(response.body.data)   ;
+                this.originalData = JSON.stringify(response.body.data);
 
             }
             else if (response.status === 0) {

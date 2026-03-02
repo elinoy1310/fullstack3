@@ -54,6 +54,9 @@ const API = {
     },
     updateRecipe: function (id, data, callback) {
         sendRequest("PUT", "/recipes/" + id, data, callback);
+    },
+    getRecipe: function (id, callback) {
+        sendRequest("GET", "/recipes/" + id, null, callback);
     }
 
 };
