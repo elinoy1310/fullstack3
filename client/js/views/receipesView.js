@@ -75,6 +75,8 @@ const addRecipeView = {
             addRecipeView.saveRecipe();
         };
         document.getElementById("addRecipeBtn").classList.add("hidden");
+        document.querySelector("#addRecipeForm button[type='submit']").innerText = "save";
+        document.querySelector("#addRecipeForm #form-header").innerText = "Add New Recipe";
     },
     renderCategories() {
 
@@ -286,7 +288,8 @@ const editRecipeView = {
         this.fillForm(recipe);
         this.bindEvents();
 
-        document.querySelector("#addRecipeForm button[type='submit']").innerText = "UPDATE";
+        document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
+        document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
     },
 
     fillForm(recipe) {
@@ -316,6 +319,8 @@ const editRecipeView = {
     },
 
     bindEvents() {
+        document.getElementById("addIngredientBtn").onclick = () => addRecipeView.addIngredientRow();
+
         const form = document.getElementById("addRecipeForm");
 
         form.onsubmit = (e) => {
@@ -360,9 +365,7 @@ const editRecipeView = {
         delete original.createdAt
         delete original.id
         delete original.server
-        console.log("originalData", original);
         const currentData = this.collectFormData();
-        console.log("currentData", currentData);
         return JSON.stringify(currentData) !==  JSON.stringify(original);
     },
 
@@ -389,6 +392,7 @@ const editRecipeView = {
             if (response.status === 200) {
                 message.className = "success";
                 message.innerText = "Recipe updated successfully!";
+                this.originalData= JSON.stringify(response.body.data)   ;
 
             }
             else if (response.status === 0) {
