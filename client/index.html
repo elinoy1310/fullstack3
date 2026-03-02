@@ -30,10 +30,11 @@ Script imports -->
     <!-- need to add styles -->
     <link rel="stylesheet" href="styles/css/main.css">
     <link rel="stylesheet" href="styles/css/auth.css">
-    
+
     <!-- need to combine both  -->
     <!-- <link rel="stylesheet" href="styles/css/recipes.css"> -->
     <link rel="stylesheet" href="styles/css/receipes.css">
+
 </head>
 
 <body>
@@ -167,6 +168,11 @@ Script imports -->
 
             <button id="addRecipeBtn" class="floating-add-btn">
                 + Add Recipe
+            </button>
+            <!-- temporary button need to change after recipe full view is completed -->
+            <input type="number" id="editRecipeIdInput" placeholder="Recipe ID">
+            <button onclick="editRecipeView.init(parseInt(document.getElementById('editRecipeIdInput').value))">
+                Edit Recipe
             </button>
 
         </div>

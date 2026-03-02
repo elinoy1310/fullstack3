@@ -41,16 +41,19 @@ This keeps views clean.
 
 const API = {
 
-    register: function(username, email, password, callback) {
-        sendRequest("POST", "/register", { username, email, password ,server:Network.AUTH_SERVER_NAME}, callback);
+    register: function (username, email, password, callback) {
+        sendRequest("POST", "/register", { username, email, password, server: Network.AUTH_SERVER_NAME }, callback);
     },
 
-    login: function(email, password, callback) {
-        sendRequest("POST", "/login", { email, password, server:Network.AUTH_SERVER_NAME }, callback);
+    login: function (email, password, callback) {
+        sendRequest("POST", "/login", { email, password, server: Network.AUTH_SERVER_NAME }, callback);
     },
 
-    createRecipe: function(recipeData, callback) {
-        sendRequest("POST", "/recipes/add", { ...recipeData, server:Network.RECIPES_SERVER_NAME }, callback);
+    createRecipe: function (recipeData, callback) {
+        sendRequest("POST", "/recipes/add", { ...recipeData, server: Network.RECIPES_SERVER_NAME }, callback);
+    },
+    updateRecipe: function (id, data, callback) {
+        sendRequest("PUT", "/recipes/" + id, data, callback);
     }
 
 };

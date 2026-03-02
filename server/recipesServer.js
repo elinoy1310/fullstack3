@@ -36,25 +36,50 @@ const RecipesServer = (function () {
         if (method === "POST" && url === "/recipes/add") {
             return create(JSON.parse(body));
         }
+        if (method === "PUT" && url.startsWith("/recipes/")) {
+            const id = parseInt(url.split("/")[2]);
+            return updateRecipe(id, JSON.parse(body));
+        }
 
         return {
             status: 404,
             body: JSON.stringify({ message: "Not found" })
         };
     }
+
     function create(data) {
         if (!data.title || !data.instructions) {
             return error("Missing fields");
         }
-    RecipesDB.create(data)
-    return success()
+        RecipesDB.create(data)
+        return success()
     }
 
-    function success() {
+    function updateRecipe(id, data) {
+
+        if (!data.title || !data.instructions) {
+            return error("Missing fields");
+        }
+
+        const recipe = RecipesDB.getByRecipeId(id);
+        if (!recipe) {
+            return {
+                status: 404,
+                body: JSON.stringify({ message: "Recipe not found" })
+            };
+        }
+
+        const updated = RecipesDB.update(id, data);
+
+        return success(updated);
+    }
+
+    function success(data = null) {
         return {
             status: 200,
             body: JSON.stringify({
-                status: "success"
+                status: "success",
+                data
             })
         };
     }
@@ -68,6 +93,7 @@ const RecipesServer = (function () {
             })
         };
     }
+
 
     return {
         handleRequest

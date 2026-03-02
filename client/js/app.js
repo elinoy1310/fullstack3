@@ -1,3 +1,4 @@
+// app.js
 const App = (function () {
 
     let currentUser = null;
