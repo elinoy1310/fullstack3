@@ -101,6 +101,66 @@ Script imports -->
             </header>
 
             <main class="recipes-content">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search recipes by name...">
+                </div>
+                <button id="openFilterBtn">Filter</button>
+
+                <div id="filterPanel" class="side-panel hidden">
+                    <button class="close-btn" id="closeFilterBtn">✖</button>
+                    <h3>Filter Recipes</h3>
+
+                    <div id="filterCategories"></div>
+
+                    <label>Prep Time From:</label>
+                    <input type="number" id="filterMinTime">
+
+                    <label>To:</label>
+                    <input type="number" id="filterMaxTime">
+
+                    <button id="applyFilterBtn">Apply Filter</button>
+                </div>
+                <button id="openSortBtn">Sort</button>
+                <div id="sortPanel" class="side-panel hidden">
+
+                    <button class="close-btn" id="closeSortBtn">✖</button>
+
+                    <h3>Sort Recipes</h3>
+
+                    <div>
+                        <label>
+                            <input type="radio" name="sortField" value="title" checked>
+                            Name
+                        </label>
+
+                        <label>
+                            <input type="radio" name="sortField" value="prepTime">
+                            Preparation Time
+                        </label>
+
+                        <label>
+                            <input type="radio" name="sortField" value="createdAt">
+                            Creation Date
+                        </label>
+                    </div>
+
+                    <div>
+                        <label>
+                            <input type="radio" name="sortOrder" value="asc" checked>
+                            ⬆
+                        </label>
+
+                        <label>
+                            <input type="radio" name="sortOrder" value="desc">
+                            ⬇
+                        </label>
+                    </div>
+
+                    <button id="applySortBtn">Apply Sort</button>
+
+                </div>
+
+                 <button id="resetBtn" class="reset-btn">Reset</button>
                 <div id="recipesContainer">
                     <p id="emptyState">There are no recipes yet.</p>
                 </div>
@@ -175,7 +235,9 @@ Script imports -->
                 Edit Recipe
             </button>
             <input type="number" id="deleteRecipeIdInput" placeholder="Recipe ID">
-            <button id="deleteRecipeBtn" onclick="RecipesView.deleteRecipe(parseInt(document.getElementById('deleteRecipeIdInput').value))">Delete Recipe</button>
+            <button id="deleteRecipeBtn"
+                onclick="RecipesView.deleteRecipe(parseInt(document.getElementById('deleteRecipeIdInput').value))">Delete
+                Recipe</button>
             <p id="deleteMessage"></p>
 
         </div>

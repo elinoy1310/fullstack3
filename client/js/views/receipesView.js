@@ -18,6 +18,7 @@ const RECIPE_CATEGORIES = [
 
 const RecipesView = {
     userRecipes: [],
+    filteredRecipes: [],
 
     init() {
 
@@ -52,6 +53,47 @@ const RecipesView = {
 
         // load user recipes
         this.loadUserRecipes(user.id);
+
+        // Search functionality
+        document.getElementById("searchInput")
+            .addEventListener("input", (e) => {
+                this.searchRecipes(e.target.value);
+            });
+
+        // filter functionality
+        document.getElementById("openFilterBtn")
+            .onclick = () => {
+                document.getElementById("filterPanel")
+                    .classList.toggle("hidden");
+            };
+
+        document.getElementById("closeFilterBtn")
+            .onclick = () => {
+                document.getElementById("filterPanel")
+                    .classList.add("hidden");
+            };
+
+        document.getElementById("applyFilterBtn")
+            .onclick = () => this.applyFilter();
+        this.renderFilterCategories();
+
+        // sort functionality
+        document.getElementById("openSortBtn")
+            .onclick = () => {
+                document.getElementById("sortPanel")
+                    .classList.toggle("hidden");
+            };
+
+        document.getElementById("applySortBtn")
+            .onclick = () => this.applySort();
+        document.getElementById("closeSortBtn")
+            .onclick = () => {
+                document.getElementById("sortPanel")
+                    .classList.add("hidden");
+            };
+        document.getElementById("resetBtn")
+            .onclick = () => this.refreshMainView(false);
+
     },
 
     deleteRecipe(recipeId) {
@@ -107,20 +149,134 @@ const RecipesView = {
         API.getUsersRecipes(userId, (response) => {
             if (response.status === 200) {
                 this.userRecipes = response.body.data;
+                this.filteredRecipes = [...this.userRecipes];
                 this.refreshMainView();
             } else {
                 // need to change to write in message in recipes full view: divide to network error : status==0 and else
                 alert("Failed to load recipes");
-                console.error("Failed to load recipes", response);
+                console.log("Failed to load recipes", response);
             }
         });
     },
+    refreshMainView(filtered = true) {
+        // console.clear();
+        if (filtered) {
+            console.log("Displayed recipes:", this.filteredRecipes);
 
-    refreshMainView() {
-        // later change to render the recipes in the main view instead of console log
-        console.log("User's recipes:", this.userRecipes);
+            if (this.filteredRecipes.length === 0) {
+                console.log("No recipes found.");
+            }
+        }
+        else {
+            console.log("Displayed recipes:", this.userRecipes);
+
+            if (this.userRecipes.length === 0) {
+                console.log("No recipes found.");
+            }
+        }
+    },
+
+    searchRecipes(query) {
+        if (!query.trim()) {
+            this.filteredRecipes = [...this.userRecipes];
+        } else {
+            this.filteredRecipes = this.userRecipes.filter(recipe =>
+                recipe.title.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+
+        this.refreshMainView();
+    },
+    renderFilterCategories() {
+
+        const container = document.getElementById("filterCategories");
+        container.innerHTML = "";
+
+        RECIPE_CATEGORIES.forEach(cat => {
+
+            const label = document.createElement("label");
+            const checkbox = document.createElement("input");
+
+            checkbox.type = "checkbox";
+            checkbox.value = cat;
+
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(cat));
+
+            container.appendChild(label);
+            container.appendChild(document.createElement("br"));
+        });
+    },
+    applyFilter() {
+
+        const selectedCategories = [...document.querySelectorAll("#filterCategories input:checked")]
+            .map(cb => cb.value);
+
+        const minTime = parseInt(document.getElementById("filterMinTime").value);
+        const maxTime = parseInt(document.getElementById("filterMaxTime").value);
+
+        if (minTime && maxTime && minTime > maxTime) {
+            alert("From time must be smaller than To time");
+            return;
+        }
+
+        this.filteredRecipes = this.userRecipes.filter(recipe => {
+
+            const matchCategory =
+                selectedCategories.length === 0 ||
+                selectedCategories.some(cat => recipe.categories.includes(cat));
+
+            const prep = parseInt(recipe.prepTime) || 0;
+
+            const matchTime =
+                (!minTime || prep >= minTime) &&
+                (!maxTime || prep <= maxTime) || !prep;
+
+            return matchCategory && matchTime;
+        });
+
+        this.refreshMainView();
+    },
+    applySort() {
+
+        const field = document.querySelector('input[name="sortField"]:checked').value;
+        const order = document.querySelector('input[name="sortOrder"]:checked').value;
+
+        this.filteredRecipes.sort((a, b) => {
+
+            let valueA = a[field];
+            let valueB = b[field];
+
+            // 🟢 עדיפות למי שיש prepTime
+            if (field === "prepTime") {
+
+                const hasA = valueA !== undefined && valueA !== null && valueA !== "";
+                const hasB = valueB !== undefined && valueB !== null && valueB !== "";
+
+                if (hasA && !hasB) return -1;
+                if (!hasA && hasB) return 1;
+
+                valueA = parseInt(valueA) || 0;
+                valueB = parseInt(valueB) || 0;
+            }
+
+            if (field === "title") {
+                valueA = valueA.toLowerCase();
+                valueB = valueB.toLowerCase();
+            }
+
+            if (field === "createdAt") {
+                valueA = new Date(valueA);
+                valueB = new Date(valueB);
+            }
+
+            if (valueA < valueB) return order === "asc" ? -1 : 1;
+            if (valueA > valueB) return order === "asc" ? 1 : -1;
+            return 0;
+        });
+
+        this.refreshMainView();
     }
-
 };
 
 const addRecipeView = {
@@ -184,7 +340,7 @@ const addRecipeView = {
         document.getElementById("addRecipeOverlay").classList.add("hidden");
         document.getElementById("addRecipeBtn").classList.remove("hidden");
         addRecipeView.resetForm();
-        RecipesView.refreshMainView();
+        RecipesView.refreshMainView(false);
     },
 
     initIngredients() {
@@ -303,6 +459,7 @@ const addRecipeView = {
                 message.innerText = "Recipe added successfully!";
                 addRecipeView.resetForm(false);
                 RecipesView.userRecipes.push(response.body.data);
+
             }
             else if (response.status === 0) {
                 message.classList.add("error");
@@ -467,7 +624,7 @@ const editRecipeView = {
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
                 RecipesView.userRecipes[index] = response.body.data;
 
-                
+
             }
             else if (response.status === 0) {
                 message.className = "error";
