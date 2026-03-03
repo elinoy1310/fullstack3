@@ -58,6 +58,9 @@ const API = {
     getRecipe: function (id, callback) {
         sendRequest("GET", "/recipes/" + id, null, callback);
     },
+    getUsersRecipes: function(userId, callback){
+        sendRequest("GET", "/recipes?userId=" + userId, null, callback);
+    },
     deleteRecipe: function (id, callback) {
         sendRequest("DELETE", "/recipes/" + id, null, callback);
     }

@@ -36,10 +36,14 @@ const RecipesDB = (function () {
         recipe.id = recipes.length > 0 ? Math.max(...recipes.map(r => r.id)) + 1 : 1;
         recipes.push(recipe);
         save(recipes);
+        return recipe;
     }
 
     function getByRecipeId(recipeId) {
         return getAll().find(r => r.id === recipeId);
+    }
+    function getAllByUserId(userId) {
+        return getAll().filter(r => r.ownerId === userId);
     }
 
     function update(id, data) {
@@ -74,6 +78,7 @@ const RecipesDB = (function () {
     return {
         getAll,
         getByRecipeId,
+        getAllByUserId,
         create,
         update,
         deleteRecipe

@@ -32,6 +32,8 @@ const RecipesServer = (function () {
     function handleRequest(request) {
 
         const { method, url, body } = request;
+        console.log(url.startsWith("/recipes?userId="))
+        
 
         if (method === "POST" && url === "/recipes/add") {
             return create(JSON.parse(body));
@@ -43,7 +45,12 @@ const RecipesServer = (function () {
         if (method === "GET" && url.startsWith("/recipes/")) {
             const id = parseInt(url.split("/")[2]);
             return getRecipe(id)
-        };
+        }
+        if (method === "GET" && url.startsWith("/recipes?userId=")) {
+            const userid = parseInt(url.split("?userId=")[1]);
+            return getRecipesByUserId(userid)
+        }
+        
         if (method === "DELETE" && url.startsWith("/recipes/")) {
             const id = parseInt(url.split("/")[2]);
             return deleteRecipe(id);
@@ -63,6 +70,11 @@ const RecipesServer = (function () {
         return success(recipe);
     }
 
+    function getRecipesByUserId(userid){
+        const recipes = RecipesDB.getAllByUserId(userid);
+        return success(recipes);
+    }
+
     //assumption: the recipeId is valid and exists in the db
     function deleteRecipe(recipeId) {
         const successDelete = RecipesDB.deleteRecipe(recipeId);
@@ -76,8 +88,8 @@ const RecipesServer = (function () {
         if (!data.title || !data.instructions) {
             return error("Missing fields");
         }
-        RecipesDB.create(data)
-        return success()
+        const newRecipe=RecipesDB.create(data)
+        return success(newRecipe)
     }
 
     function updateRecipe(id, data) {

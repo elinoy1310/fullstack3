@@ -17,6 +17,7 @@ const RECIPE_CATEGORIES = [
 ];
 
 const RecipesView = {
+    userRecipes: [],
 
     init() {
 
@@ -49,7 +50,8 @@ const RecipesView = {
 
         // ➖ DELETE Recipe  * temporary place to activate the function - need to change after recipe full view is completed
 
-        // 📦 כרגע אין מתכונים – בעתיד נטעין
+        // load user recipes
+        this.loadUserRecipes(user.id);
     },
 
     deleteRecipe(recipeId) {
@@ -76,6 +78,9 @@ const RecipesView = {
                     if (response.status === 200) {
                         messageEl.className = "success";
                         messageEl.innerText = `Recipe: ${recipe.title} deleted successfully!`;
+                        RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipeId);
+                        // change to do this after closing the full view because of the delete 
+                        RecipesView.refreshMainView();
                     }
                     else if (response.status === 0) {
                         messageEl.className = "error";
@@ -97,7 +102,25 @@ const RecipesView = {
             }
 
         });
+    },
+    loadUserRecipes(userId) {
+        API.getUsersRecipes(userId, (response) => {
+            if (response.status === 200) {
+                this.userRecipes = response.body.data;
+                this.refreshMainView();
+            } else {
+                // need to change to write in message in recipes full view: divide to network error : status==0 and else
+                alert("Failed to load recipes");
+                console.error("Failed to load recipes", response);
+            }
+        });
+    },
+
+    refreshMainView() {
+        // later change to render the recipes in the main view instead of console log
+        console.log("User's recipes:", this.userRecipes);
     }
+
 };
 
 const addRecipeView = {
@@ -161,6 +184,7 @@ const addRecipeView = {
         document.getElementById("addRecipeOverlay").classList.add("hidden");
         document.getElementById("addRecipeBtn").classList.remove("hidden");
         addRecipeView.resetForm();
+        RecipesView.refreshMainView();
     },
 
     initIngredients() {
@@ -278,6 +302,7 @@ const addRecipeView = {
                 message.className = "success";
                 message.innerText = "Recipe added successfully!";
                 addRecipeView.resetForm(false);
+                RecipesView.userRecipes.push(response.body.data);
             }
             else if (response.status === 0) {
                 message.classList.add("error");
@@ -439,6 +464,10 @@ const editRecipeView = {
                 message.innerText = "Recipe updated successfully!";
                 this.originalData = JSON.stringify(response.body.data);
 
+                const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
+                RecipesView.userRecipes[index] = response.body.data;
+
+                
             }
             else if (response.status === 0) {
                 message.className = "error";
@@ -458,6 +487,7 @@ const editRecipeView = {
         }
 
         this.reset();
+        RecipesView.refreshMainView();
     },
 
     reset() {
