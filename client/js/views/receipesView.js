@@ -693,9 +693,22 @@ const editRecipeView = {
                 message.innerText = "Recipe updated successfully!";
                 this.originalData = JSON.stringify(response.body.data);
 
+                // 1. עדכון במערך המתכונים הראשי
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
-                RecipesView.userRecipes[index] = response.body.data;
+                if (index !== -1) {
+                    RecipesView.userRecipes[index] = response.body.data;
+                }
 
+                // 2. **התיקון:** עדכון במערך המתכונים שמוצג על המסך! (כדי שהתמונה תשתנה מיד)
+                const filterIndex = RecipesView.filteredRecipes.findIndex(r => r.id === this.currentRecipeId);
+                if (filterIndex !== -1) {
+                    RecipesView.filteredRecipes[filterIndex] = response.body.data;
+                }
+
+                setTimeout(() => {
+                    this.closeModal(); 
+                    recipeFullView.open(response.body.data); 
+                }, 1000); 
 
             }
             else if (response.status === 0) {

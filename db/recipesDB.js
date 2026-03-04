@@ -23,8 +23,67 @@ delete(id)
 const RecipesDB = (function () {
 
     const STORAGE_KEY = "recipes";
+
+    // ---- המתכונים הקבועים שלנו ----
+    const defaultRecipes = [
+        {
+            id: 1,
+            ownerId: 1, // שייך למשתמש הראשון שיירשם במערכת
+            title: "פנקייק אוורירי מושלם",
+            ingredients: [
+                { name: "קמח לבן", amount: "1 כוס" },
+                { name: "חלב", amount: "1 כוס" },
+                { name: "ביצה", amount: "1" },
+                { name: "סוכר", amount: "2 כפות" }
+            ],
+            instructions: "1. מערבבים את הקמח והסוכר בקערה.\n2. מוסיפים את החלב והביצה וטורפים היטב עד שאין גושים.\n3. מחממים מחבת עם מעט חמאה.\n4. יוצקים מהבלילה ומטגנים כדקה מכל צד עד להזהבה.",
+            categories: ["Breakfast", "Vegetarian", "Dessert"],
+            prepTime: "15",
+            difficulty: "Easy",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR59dFPp8XqS9Xbmic7XUXA8oH0_pWVrORMzQ&s",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 2,
+            ownerId: 1, // שייך למשתמש הראשון שיירשם במערכת
+            title: "פסטה ברוטב עגבניות טריות ושום",
+            ingredients: [
+                { name: "פסטה", amount: "500 גרם" },
+                { name: "עגבניות שרי", amount: "200 גרם" },
+                { name: "שום", amount: "3 שיניים" },
+                { name: "שמן זית", amount: "3 כפות" },
+                { name: "בזיליקום", amount: "חופן" }
+            ],
+            instructions: "1. מבשלים את הפסטה בסיר עם מים מומלחים לפי ההוראות.\n2. במחבת גדולה, מטגנים את השום הפרוס בשמן זית על אש קטנה.\n3. מוסיפים את עגבניות השרי החצויות ומבשלים כ-10 דקות.\n4. מסננים את הפסטה, מעבירים למחבת, מוסיפים בזיליקום ומערבבים היטב.",
+            categories: ["Dinner", "Lunch", "Vegan"],
+            prepTime: "30",
+            difficulty: "Medium",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0rnd4BwsgiYjj3FYC14sN-dH6eePgXpX3xw&s",
+            createdAt: new Date(Date.now() - 86400000).toISOString() // נוצר אתמול
+        }
+    ];
+
     function getAll() {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let recipes = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        let addedNew = false;
+
+        defaultRecipes.forEach(defaultRecipe => {
+            const exists = recipes.find(r => r.title === defaultRecipe.title);
+            
+            if (!exists) {
+                const currentMaxId = recipes.length > 0 ? Math.max(...recipes.map(r => r.id)) : 0;
+                const recipeToAdd = { ...defaultRecipe, id: currentMaxId + 1 };
+                recipes.push(recipeToAdd);
+                addedNew = true;
+            }
+        });
+
+        // שומרים רק אם הוספנו משהו חדש
+        if (addedNew) {
+            save(recipes);
+        }
+
+        return recipes;
     }
 
     function save(users) {

@@ -318,24 +318,35 @@
     max-height: 85vh;
     overflow-y: auto;
     border-radius: 1.5rem;
-    padding: 2rem;
+    padding: 0; /* הורדנו את הפדינג מכאן כדי שהכותרת תידבק לקצה */
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
     animation: slideUp 0.3s ease;
+    position: relative;
 }
 
 .modal-body br { display: none; }
 
 .modal-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid var(--border-color); 
+    padding: 1.5rem 2rem 1rem 2rem; /* החזרנו את הפדינג הפנימי לכותרת */
+    position: sticky; /* הופך את הכותרת לדביקה */
+    top: 0;
+    background-color: var(--card-bg); /* צבע אטום כדי שהטקסט הנגלל לא ייראה מאחורה */
+    z-index: 50; /* תמיד מעל התוכן הנגלל */
 }
 .modal-header h3 { margin: 0; color: var(--text-color); font-weight: 800; font-size: 1.5rem; }
 #closeModalBtn { background: none; border: none; color: var(--primary-color); font-size: 1.2rem; cursor: pointer; font-weight: bold;}
 
+.modal-body {
+    padding: 1rem 2rem; /* הוספנו את הפדינג הפנימי לתוכן */
+}
+
 .modal-body p { font-size: 0.8rem; color: var(--text-muted); margin-top: 0; margin-bottom: 1rem; }
 .modal-body label { display: block; color: var(--text-color); font-size: 0.9rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem; }
-
 .modal-body input[type="text"],
 .modal-body input[type="number"],
 .modal-body input[type="url"],
@@ -349,6 +360,19 @@
     border-color: var(--primary-color); background-color: white; box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.15);
 }
 .modal-body textarea { min-height: 100px; resize: vertical; }
+
+.modal-footer { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 1rem; 
+    padding: 1.5rem 2rem; /* הוספנו פדינג */
+    border-top: 1px solid var(--border-color); 
+    background-color: var(--card-bg);
+}
+
+
+#cancelRecipeBtn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; }
+.modal-footer button[type="submit"] { background: var(--primary-color); color: white; border: none; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);}
 
 /* קטגוריות טופס הוספה */
 #categoriesContainer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
@@ -400,11 +424,28 @@
 }
 
 #fullBackBtn {
-    position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.5); color: white;
-    border: none; padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; font-weight: bold; z-index: 10;
+    position: absolute; 
+    top: 1.5rem; 
+    left: 1.5rem; 
+    background-color: var(--primary-color); /* צבע כתום בולט */
+    color: white;
+    border: 2px solid white; /* מסגרת לבנה ליצירת קונטרסט מול התמונה */
+    padding: 0.6rem 1.5rem; 
+    border-radius: 2rem; 
+    cursor: pointer; 
+    font-weight: 800; 
+    font-size: 1rem;
+    z-index: 20; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* הצללה חזקה יותר */
+    transition: all 0.3s ease;
+    text-transform: uppercase; /* אותיות גדולות באנגלית כדי שיהיה קריא יותר */
+    letter-spacing: 0.5px;
 }
-#fullBackBtn:hover { background: rgba(0,0,0,0.8); }
-
+#fullBackBtn:hover { 
+    background-color: var(--primary-hover); 
+    transform: translateY(-2px) scale(1.05); /* אנימציית קפיצה קטנה */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
 .recipe-full-header {
     height: 300px; border-radius: 1rem; background-size: cover; background-position: center;
     display: flex; align-items: flex-end; position: relative; color: white; margin-bottom: 2rem;
