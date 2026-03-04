@@ -15,6 +15,7 @@ const RECIPE_CATEGORIES = [
     "Grilled",
     "No-Bake"
 ];
+const DEFAULT_RECIPE_IMAGE = "styles/images/default-background-img.jpeg";
 
 const RecipesView = {
     userRecipes: [],
@@ -145,37 +146,100 @@ const RecipesView = {
 
         });
     },
-    loadUserRecipes(userId) {
-        API.getUsersRecipes(userId, (response) => {
-            if (response.status === 200) {
-                this.userRecipes = response.body.data;
-                this.filteredRecipes = [...this.userRecipes];
-                this.refreshMainView();
-            } else {
-                // need to change to write in message in recipes full view: divide to network error : status==0 and else
-                alert("Failed to load recipes");
-                console.log("Failed to load recipes", response);
-            }
-        });
-    },
-    refreshMainView(filtered = true) {
-        // console.clear();
-        if (filtered) {
-            console.log("Displayed recipes:", this.filteredRecipes);
 
-            if (this.filteredRecipes.length === 0) {
-                console.log("No recipes found.");
-            }
+    loadUserRecipes(userId) {
+
+    const messageBox = document.getElementById("recipesMessage");
+    const container = document.getElementById("recipesContainer");
+
+    container.innerHTML = "";
+    messageBox.innerHTML = "Loading...";
+
+    API.getUsersRecipes(userId, (response) => {
+
+        if (response.status === 200) {
+            this.userRecipes = response.body.data;
+            this.filteredRecipes = [...this.userRecipes];
+            this.refreshMainView();
+        }
+        else if (response.status === 0) {
+
+            messageBox.innerHTML = `
+                <div class="message-box">
+                    Network error.
+                    <br>
+                    <button class="reload-btn" id="reloadBtn">Reload</button>
+                </div>
+            `;
+
+            document.getElementById("reloadBtn").onclick = () => {
+                this.loadUserRecipes(userId);
+            };
         }
         else {
-            console.log("Displayed recipes:", this.userRecipes);
-
-            if (this.userRecipes.length === 0) {
-                console.log("No recipes found.");
-            }
+            messageBox.innerHTML = `
+                <div class="message-box">
+                    ${response.body.message}
+                </div>
+            `;
         }
-    },
+    });
+},
 
+    refreshMainView(filtered = true) {
+
+    const container = document.getElementById("recipesContainer");
+    const messageBox = document.getElementById("recipesMessage");
+
+    container.innerHTML = "";
+    messageBox.innerHTML = "";
+
+    const recipes = filtered ? this.filteredRecipes : this.userRecipes;
+
+    if (!recipes || recipes.length === 0) {
+        messageBox.innerHTML = `
+            <div class="message-box">
+                No recipes found.
+            </div>
+        `;
+        return;
+    }
+
+    recipes.forEach(recipe => {
+
+        const card = document.createElement("div");
+        card.className = "recipe-card";
+
+        const imageUrl = recipe.image && recipe.image.trim() !== ""
+            ? recipe.image
+            : DEFAULT_RECIPE_IMAGE;
+
+
+// בדיקה אם התמונה נטענת
+const img = new Image();
+
+img.onload = () => {
+    card.style.backgroundImage = `url('${imageUrl}')`;
+};
+
+img.onerror = () => {
+    card.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+};
+
+img.src = imageUrl;
+        card.innerHTML = `
+            <div class="recipe-card-title">
+                ${recipe.title}
+            </div>
+        `;
+
+        card.onclick = () => {
+            console.log("Recipe with ID:", recipe.id);
+        };
+
+        container.appendChild(card);
+    });
+},
     searchRecipes(query) {
         if (!query.trim()) {
             this.filteredRecipes = [...this.userRecipes];
@@ -207,6 +271,7 @@ const RecipesView = {
             container.appendChild(document.createElement("br"));
         });
     },
+
     applyFilter() {
 
         const selectedCategories = [...document.querySelectorAll("#filterCategories input:checked")]
@@ -237,6 +302,7 @@ const RecipesView = {
 
         this.refreshMainView();
     },
+
     applySort() {
 
         const field = document.querySelector('input[name="sortField"]:checked').value;
