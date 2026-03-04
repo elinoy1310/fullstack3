@@ -486,3 +486,10 @@
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeInScale { from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.sort-fields,
+.sort-order {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}

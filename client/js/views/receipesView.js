@@ -91,7 +91,10 @@ const RecipesView = {
                     .classList.add("hidden");
             };
         document.getElementById("resetBtn")
-            .onclick = () => this.refreshMainView(false);
+            .onclick = () => {
+                this.refreshMainView(false);
+                document.getElementById("searchInput").value = "";
+            }
 
     },
 
@@ -187,6 +190,7 @@ const RecipesView = {
             container.appendChild(card);
         });
     },
+
     searchRecipes(query) {
         if (!query.trim()) {
             this.filteredRecipes = [...this.userRecipes];
@@ -198,6 +202,7 @@ const RecipesView = {
 
         this.refreshMainView();
     },
+
     renderFilterCategories() {
 
         const container = document.getElementById("filterCategories");
@@ -220,7 +225,6 @@ const RecipesView = {
     },
 
     applyFilter() {
-
         const selectedCategories = [...document.querySelectorAll("#filterCategories input:checked")]
             .map(cb => cb.value);
 
@@ -250,6 +254,7 @@ const RecipesView = {
         this.refreshMainView();
 
         document.getElementById("filterPanel").classList.add("hidden");
+        this.resetFilterPanel();
     },
 
     applySort() {
@@ -257,7 +262,7 @@ const RecipesView = {
         const field = document.querySelector('input[name="sortField"]:checked').value;
         const order = document.querySelector('input[name="sortOrder"]:checked').value;
 
-        this.filteredRecipes.sort((a, b) => {
+         this.filteredRecipes=[...this.userRecipes].sort((a, b) => {
 
             let valueA = a[field];
             let valueB = b[field];
@@ -288,11 +293,27 @@ const RecipesView = {
             if (valueA > valueB) return order === "asc" ? 1 : -1;
             return 0;
         });
+        
 
         this.refreshMainView();
 
         document.getElementById("sortPanel").classList.add("hidden");
-    }
+        this.resetSortPanel();
+    },
+    resetFilterPanel() {
+
+    document.getElementById("filterMinTime").value = "";
+    document.getElementById("filterMaxTime").value = "";
+
+    document.querySelectorAll("#filterCategories input")
+        .forEach(cb => cb.checked = false);
+},
+
+resetSortPanel() {
+
+    document.querySelector('input[name="sortField"][value="title"]').checked = true;
+    document.querySelector('input[name="sortOrder"][value="asc"]').checked = true;
+}
 };
 
 const addRecipeView = {
@@ -595,10 +616,8 @@ const editRecipeView = {
         delete original.createdAt
         delete original.id
         delete original.server
-        console.log("Original:", original);
 
         const currentData = this.collectFormData();
-        console.log("Current Data:", currentData);
         return JSON.stringify(currentData) !== JSON.stringify(original);
     },
 
@@ -659,7 +678,7 @@ const editRecipeView = {
             if (!confirm("Discard changes?")) return;
         }
 
-        RecipesView.refreshMainView();
+        RecipesView.refreshMainView(false);
         recipeFullView.open(this.originalData);
         this.reset();
     },
@@ -668,8 +687,6 @@ const editRecipeView = {
 
         document.getElementById("addRecipeOverlay").classList.add("hidden");
         document.getElementById("addRecipeBtn").classList.remove("hidden");
-        document.getElementById("editRecipeIdInput").classList.remove("hidden");
-        //add for temp edit button
 
         document.getElementById("addRecipeForm").reset();
         document.getElementById("modalMessage").innerText = "";
@@ -803,12 +820,6 @@ const recipeFullView = {
         document.getElementById("recipeFullOverlay")
             .classList.add("hidden");
         document.body.style.overflow = "auto";
-    },
-
-    showMessage(text, type = "error") {
-        const messageEl = document.getElementById("recipeFullMessage");
-        messageEl.className = "full-message " + type;
-        messageEl.innerText = text;
     },
 
     clearMessage() {
