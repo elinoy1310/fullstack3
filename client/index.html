@@ -166,7 +166,7 @@ Script imports -->
                 </div> -->
                 <div id="recipesMessage"></div>
 
-<div id="recipesContainer" class="recipes-grid"></div>
+                <div id="recipesContainer" class="recipes-grid"></div>
                 <div id="addRecipeOverlay" class="overlay hidden">
                     <div class="modal">
 
@@ -227,7 +227,24 @@ Script imports -->
 
                     </div>
                 </div>
+                <div id="recipeFullOverlay" class="hidden">
+
+                    <div class="recipe-full-container">
+                        <button id="fullBackBtn">Back</button>
+                        <div id="recipeFullContent"></div>
+                        <div id="recipeFullMessage" class="full-message"></div>
+
+                        <div class="recipe-full-actions">
+                            <button id="fullEditBtn">Edit</button>
+                            <button id="fullDeleteBtn">Delete</button>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
             </main>
+
 
             <button id="addRecipeBtn" class="floating-add-btn">
                 + Add Recipe

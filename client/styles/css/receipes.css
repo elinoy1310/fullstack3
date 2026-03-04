@@ -423,3 +423,85 @@
     padding: 8px 16px;
     cursor: pointer;
 }
+
+/* ========================================== */
+/*             fullrecipe style              */
+/* ========================================== */
+#recipeFullOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.recipe-full-container {
+    width: 70%;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+}
+
+.recipe-full-header {
+    height: 250px;
+    border-radius: 16px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.recipe-full-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px;
+}
+
+.recipe-full-header span {
+    position: relative;
+}
+
+.recipe-meta {
+    margin-bottom: 15px;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #eee;
+    border-radius: 10px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.difficulty-easy { color: green; }
+.difficulty-medium { color: orange; }
+.difficulty-hard { color: red; }
+
+.recipe-section-title {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.recipe-full-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.recipe-instructions {
+    white-space: pre-line;
+}

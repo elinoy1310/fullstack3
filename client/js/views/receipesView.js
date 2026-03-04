@@ -149,22 +149,22 @@ const RecipesView = {
 
     loadUserRecipes(userId) {
 
-    const messageBox = document.getElementById("recipesMessage");
-    const container = document.getElementById("recipesContainer");
+        const messageBox = document.getElementById("recipesMessage");
+        const container = document.getElementById("recipesContainer");
 
-    container.innerHTML = "";
-    messageBox.innerHTML = "Loading...";
+        container.innerHTML = "";
+        messageBox.innerHTML = "Loading...";
 
-    API.getUsersRecipes(userId, (response) => {
+        API.getUsersRecipes(userId, (response) => {
 
-        if (response.status === 200) {
-            this.userRecipes = response.body.data;
-            this.filteredRecipes = [...this.userRecipes];
-            this.refreshMainView();
-        }
-        else if (response.status === 0) {
+            if (response.status === 200) {
+                this.userRecipes = response.body.data;
+                this.filteredRecipes = [...this.userRecipes];
+                this.refreshMainView();
+            }
+            else if (response.status === 0) {
 
-            messageBox.innerHTML = `
+                messageBox.innerHTML = `
                 <div class="message-box">
                     Network error.
                     <br>
@@ -172,74 +172,75 @@ const RecipesView = {
                 </div>
             `;
 
-            document.getElementById("reloadBtn").onclick = () => {
-                this.loadUserRecipes(userId);
-            };
-        }
-        else {
-            messageBox.innerHTML = `
+                document.getElementById("reloadBtn").onclick = () => {
+                    this.loadUserRecipes(userId);
+                };
+            }
+            else {
+                messageBox.innerHTML = `
                 <div class="message-box">
                     ${response.body.message}
                 </div>
             `;
-        }
-    });
-},
+            }
+        });
+    },
 
     refreshMainView(filtered = true) {
 
-    const container = document.getElementById("recipesContainer");
-    const messageBox = document.getElementById("recipesMessage");
+        const container = document.getElementById("recipesContainer");
+        const messageBox = document.getElementById("recipesMessage");
 
-    container.innerHTML = "";
-    messageBox.innerHTML = "";
+        container.innerHTML = "";
+        messageBox.innerHTML = "";
 
-    const recipes = filtered ? this.filteredRecipes : this.userRecipes;
+        const recipes = filtered ? this.filteredRecipes : this.userRecipes;
 
-    if (!recipes || recipes.length === 0) {
-        messageBox.innerHTML = `
+        if (!recipes || recipes.length === 0) {
+            messageBox.innerHTML = `
             <div class="message-box">
                 No recipes found.
             </div>
         `;
-        return;
-    }
+            return;
+        }
 
-    recipes.forEach(recipe => {
+        recipes.forEach(recipe => {
 
-        const card = document.createElement("div");
-        card.className = "recipe-card";
+            const card = document.createElement("div");
+            card.className = "recipe-card";
 
-        const imageUrl = recipe.image && recipe.image.trim() !== ""
-            ? recipe.image
-            : DEFAULT_RECIPE_IMAGE;
+            const imageUrl = recipe.image && recipe.image.trim() !== ""
+                ? recipe.image
+                : DEFAULT_RECIPE_IMAGE;
 
 
-// בדיקה אם התמונה נטענת
-const img = new Image();
+            // בדיקה אם התמונה נטענת
+            const img = new Image();
 
-img.onload = () => {
-    card.style.backgroundImage = `url('${imageUrl}')`;
-};
+            img.onload = () => {
+                card.style.backgroundImage = `url('${imageUrl}')`;
+            };
 
-img.onerror = () => {
-    card.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
-};
+            img.onerror = () => {
+                card.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+            };
 
-img.src = imageUrl;
-        card.innerHTML = `
+            img.src = imageUrl;
+            card.innerHTML = `
             <div class="recipe-card-title">
                 ${recipe.title}
             </div>
         `;
 
-        card.onclick = () => {
-            console.log("Recipe with ID:", recipe.id);
-        };
+            card.onclick = () => {
+                console.log("Recipe with ID:", recipe.id);
+                recipeFullView.open(recipe);
+            };
 
-        container.appendChild(card);
-    });
-},
+            container.appendChild(card);
+        });
+    },
     searchRecipes(query) {
         if (!query.trim()) {
             this.filteredRecipes = [...this.userRecipes];
@@ -725,6 +726,121 @@ const editRecipeView = {
 
         this.originalData = null;
         this.currentRecipeId = null;
+    }
+};
+
+const recipeFullView = {
+
+    currentRecipe: null,
+
+    open(recipe) {
+
+        this.currentRecipe = recipe;
+        this.clearMessage();
+        const overlay = document.getElementById("recipeFullOverlay");
+        const content = document.getElementById("recipeFullContent");
+
+        overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+
+        // const imageStyle = recipe.image && recipe.image.trim() !== ""
+        //     ? `style="background-image: url('${recipe.image}')"`
+        //     : "";
+
+
+
+        let difficultyClass = "";
+        if (recipe.difficulty === "Easy") difficultyClass = "difficulty-easy";
+        if (recipe.difficulty === "Medium") difficultyClass = "difficulty-medium";
+        if (recipe.difficulty === "Hard") difficultyClass = "difficulty-hard";
+
+        content.innerHTML = `
+            <div class="recipe-full-header">
+                <span>${recipe.title}</span>
+            </div>
+
+            <div class="recipe-meta">
+                ${recipe.prepTime ? `<div><strong>Preparation Time:</strong> ${recipe.prepTime} minutes</div>` : ""}
+                
+                ${recipe.categories && recipe.categories.length > 0
+                ? `<div><strong>Categories:</strong> 
+                        ${recipe.categories.map(c => `<span class="category-badge">${c}</span>`).join("")}
+                       </div>`
+                : ""}
+
+                ${recipe.difficulty
+                ? `<div><strong>Difficulty:</strong> 
+                        <span class="${difficultyClass}">${recipe.difficulty}</span>
+                       </div>`
+                : ""}
+            </div>
+
+            <div class="recipe-section-title">Ingredients</div>
+            <ul>
+                ${recipe.ingredients.map(i =>
+                    `<li>${i.name} : ${i.amount}</li>`
+                ).join("")}
+            </ul>
+
+            <div class="recipe-section-title">Instructions</div>
+            <div class="recipe-instructions">
+    ${recipe.instructions}
+</div>
+        `;
+        const header = content.querySelector(".recipe-full-header");
+        header.style.backgroundImage = "";
+if (recipe.image) {
+    const img = new Image();
+    img.src = recipe.image
+
+    img.onload = () => {
+        header.style.backgroundImage = `url(${recipe.image})`;
+       
+    };
+
+    img.onerror = () => {
+    //   console.log("Failed to load image, using default.");
+     header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+    };
+} else {
+    // console.log("No image provided, using default.");
+    header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+}
+        this.bindActions();
+    },
+
+    bindActions() {
+
+        document.getElementById("fullBackBtn").onclick = () => {
+            this.close();
+        };
+
+        document.getElementById("fullEditBtn").onclick = () => {
+            this.close();
+            editRecipeView.init(this.currentRecipe.id);
+        };
+
+        document.getElementById("fullDeleteBtn").onclick = () => {
+            RecipesView.deleteRecipe(this.currentRecipe.id);
+            this.close();
+        };
+    },
+
+    close() {
+        document.getElementById("recipeFullOverlay")
+            .classList.add("hidden");
+        document.body.style.overflow = "auto";
+    },
+    showMessage(text, type = "error") {
+        const messageEl = document.getElementById("recipeFullMessage");
+        messageEl.className = "full-message " + type;
+        messageEl.innerText = text;
+    },
+
+    clearMessage() {
+        const messageEl = document.getElementById("recipeFullMessage");
+        messageEl.innerText = "";
+        messageEl.className = "full-message";
     }
 };
 
