@@ -7,8 +7,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 0;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
 }
 
 .recipes-header h2 {
@@ -23,485 +22,426 @@
     min-height: 60vh;
 }
 
-/* ========================================== */
-/* כפתור הוספה צף (Floating Action Button)    */
-/* ========================================== */
+/* שורת חיפוש */
+.search-bar {
+    margin-bottom: 1.5rem;
+}
 
-.floating-add-btn {
-    position: fixed;
-    bottom: 30px;
-    left: 30px; 
-    background-color: var(--primary-color);
-    color: white;
+.search-bar input {
+    width: 100%;
     padding: 1rem 1.5rem;
     border-radius: 2rem;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.3);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    z-index: 90;
-}
-
-.floating-add-btn:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-4px) scale(1.05); 
-    box-shadow: 0 15px 20px -3px rgba(238, 108, 43, 0.4);
-}
-
-/* ========================================== */
-/* רקע החלון הקופץ (Overlay) ומודאל           */
-/* ========================================== */
-
-.overlay {
-    position: fixed;
-    top: 0; 
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(15, 23, 42, 0.6); 
-    backdrop-filter: blur(4px); 
-    justify-content: center;
-    align-items: center;
-    display: none; 
-    z-index: 999; 
-}
-
-.overlay:not(.hidden) {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-}
-
-.modal {
-    background: var(--card-bg);
-    width: 90%;
-    max-width: 500px; 
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 1.25rem; 
-    padding: 2rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-color);
-    animation: slideUp 0.3s ease;
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    background-color: var(--card-bg);
+}
+
+.search-bar input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(238, 108, 43, 0.15);
 }
 
 /* ========================================== */
-/* עיצוב טופס הוספת מתכון (בתוך המודאל)       */
+/* כפתורי סרגל כלים: Filter | Sort | Reset    */
 /* ========================================== */
 
-/* הסתרת ירידות השורה ב-HTML כדי לתת ל-CSS לשלוט במרווחים */
-.modal-body br {
-    display: none;
+#openFilterBtn, #openSortBtn, #resetBtn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem; 
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    margin-bottom: 2rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+#openFilterBtn:hover, #openSortBtn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: #fffaf7;
+}
+
+/* כפתור הריסט - הוזז לצד ימין */
+#resetBtn {
+    border-color: #fecaca;
+    color: #dc2626;
+    float: right; /* דוחף את הכפתור לקצה הימני של המסך */
+}
+
+#resetBtn:hover {
+    background-color: #fee2e2;
+}
+
+/* ========================================== */
+/* פאנל סינון ומיון (Modals מרחפים!)          */
+/* ========================================== */
+
+.side-panel {
+    position: fixed; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 450px;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 0 100vw rgba(15, 23, 42, 0.5), 0 25px 50px -12px rgba(0, 0, 0, 0.4); 
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    animation: fadeInScale 0.2s ease;
+}
+
+.side-panel.hidden {
+    display: none !important;
+}
+
+.side-panel h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-top: 0;
     margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 1rem;
 }
 
-.modal-header h3 {
-    margin: 0;
-    color: var(--text-color);
-    font-weight: 800;
-    font-size: 1.5rem;
-}
-
-/* כפתור ה-X לסגירה */
-#closeModalBtn {
+.close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
     background: none;
     border: none;
-    color: var(--primary-color);
     font-size: 1.25rem;
     font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-#closeModalBtn:hover {
-    transform: scale(1.1);
-}
-
-.modal-body p {
-    font-size: 0.75rem;
     color: var(--text-muted);
-    margin-top: 0;
-    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
 
-.modal-body label {
-    display: block;
-    color: var(--text-color);
-    font-size: 0.875rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    margin-top: 1rem;
+.close-btn:hover {
+    color: var(--primary-color);
 }
 
-/* שדות קלט כלליים */
-.modal-body input[type="text"],
-.modal-body input[type="number"],
-.modal-body input[type="url"],
-.modal-body select,
-.modal-body textarea {
+/* כפתורי שמירה בתוך הפאנלים (Apply) */
+#applyFilterBtn, #applySortBtn {
     width: 100%;
-    border-radius: 0.75rem;
-    border: 1px solid rgba(238, 108, 43, 0.2); 
-    background-color: #fcfcfc;
+    background-color: var(--primary-color);
+    color: white;
     padding: 1rem;
-    font-size: 1rem;
-    font-family: inherit;
-    color: var(--text-color);
-    box-sizing: border-box;
-    transition: all 0.2s ease;
-    outline: none;
-    margin-bottom: 0.5rem;
+    border-radius: 0.75rem;
+    border: none;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.modal-body input:focus,
-.modal-body select:focus,
-.modal-body textarea:focus {
-    box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.2);
-    border-color: var(--primary-color);
-}
+#applyFilterBtn:hover, #applySortBtn:hover { background-color: var(--primary-hover); }
+#applyFilterBtn:active, #applySortBtn:active { transform: scale(0.98); }
 
-.modal-body textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-/* ========================================== */
-/* עיצוב התגיות (Pills) לבחירת קטגוריות       */
-/* ========================================== */
-
-#categoriesContainer {
+/* ---- עיצוב פנימי לפילטר ---- */
+#filterCategories {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    margin-bottom: 0.25rem;
+    flex-wrap: wrap; 
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
-.pill {
+#filterCategories br { display: none; }
+#filterCategories input[type="checkbox"] { display: none; }
+
+#filterCategories label {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 0.6rem 1.25rem;
+    padding: 0.5rem 1rem;
     border-radius: 2rem;
-    background-color: #fffaf7; 
+    background-color: #fffaf7;
     color: var(--text-color);
-    border: 1px solid #fed7aa; 
+    border: 1px solid #fed7aa;
     cursor: pointer;
-    user-select: none;
-    transition: all 0.2s ease;
     font-size: 0.9rem;
     font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-/* מעלים לחלוטין את תיבת הסימון (Checkbox) */
-.pill input[type="checkbox"] {
-    display: none !important;
-}
-
-.pill:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.pill.selected {
+#filterCategories label:has(input[type="checkbox"]:checked) {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 4px 6px -1px rgba(238, 108, 43, 0.2);
+    box-shadow: 0 4px 6px rgba(238, 108, 43, 0.2);
 }
 
-/* ========================================== */
-/* שורות מצרכים (Ingredients)                 */
-/* ========================================== */
-
-.ingredient-row {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-    align-items: center; 
-}
-
-/* תיבת כמות קטנה (הגדרנו מינימום רוחב שלא תעלם) */
-.ingredient-row input:first-of-type {
-    flex: 0 0 80px;
-    text-align: center;
-}
-/* התיבה השנייה (הימנית) - מיועדת לכמות */
-.ingredient-row input:nth-of-type(2) {
-    flex: 0 0 90px; /* פקודה זו נועלת את התיבה לרוחב קטן וקבוע של 90 פיקסלים */
-    text-align: center;
-}
-
-/* כפתור ה-X למחיקת שורת מצרך */
-.removeBtn {
-    background-color: #f1f5f9;
-    color: #94a3b8;
-    border: 1px solid #e2e8f0;
+#filterPanel label { font-weight: 700; color: var(--text-color); margin-right: 0.5rem; }
+#filterMinTime, #filterMaxTime {
+    width: 70px;
+    padding: 0.5rem;
     border-radius: 0.5rem;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
-    padding: 0;
-    flex-shrink: 0; 
-}
-
-.removeBtn:hover {
-    background-color: #fee2e2;
-    color: #ef4444;
-    border-color: #fca5a5;
-}
-
-.removeBtn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-/* כפתור הוספת מצרך הכתום */
-#addIngredientBtn {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    font-weight: 800;
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 0.5rem 0;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.2s;
-    margin-top: 0.25rem;
-}
-
-#addIngredientBtn:hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
-}
-
-/* ========================================== */
-/* כפתורי שמירה וביטול בתחתית                 */
-/* ========================================== */
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-    gap: 1rem;
-}
-
-#cancelRecipeBtn {
-    background-color: transparent;
-    color: #64748b;
-    border: 1px solid #cbd5e1;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    font-weight: 700;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-#cancelRecipeBtn:hover {
-    background-color: #f1f5f9;
-    color: #334155;
-}
-
-.modal-footer button[type="submit"] {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 0.75rem;
-    border: none;
-    font-weight: 800;
-    font-size: 1rem;
-    cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
-    transition: all 0.2s ease;
-}
-
-.modal-footer button[type="submit"]:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
-}
-
-.modal-footer button[type="submit"]:active {
-    transform: scale(0.98);
-}
-
-#modalMessage {
+    border: 1px solid var(--border-color);
     text-align: center;
-    font-weight: bold;
-    margin-top: 1rem;
+    outline: none;
+    font-family: inherit;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
+#filterMinTime:focus, #filterMaxTime:focus { border-color: var(--primary-color); }
 
-/* ========================================== */
-/* אנימציות למודאל                            */
-/* ========================================== */
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* ---- עיצוב פנימי למיון (Sort) ---- */
+#sortPanel div { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+#sortPanel label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; }
+#sortPanel input[type="radio"] { accent-color: var(--primary-color); width: 1.2rem; height: 1.2rem; cursor: pointer; }
 
 
 /* ========================================== */
-/*             recipe card style              */
+/* גריד וכרטיסיות מתכונים                     */
 /* ========================================== */
+
 .recipes-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    clear: both; /* מוודא שהגריד יושב מתחת לכפתור ה-Reset שהוזז ימינה */
 }
 
 .recipe-card {
-    width: 200px;
-    height: 150px;
-    border-radius: 16px;
+    height: 200px;
+    border-radius: 1rem;
     background-size: cover;
     background-position: center;
     position: relative;
     cursor: pointer;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
+    align-items: flex-end;
+    justify-content: flex-start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
 }
 
 .recipe-card::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(50,50,50,0.5);
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 100%);
 }
 
 .recipe-card-title {
     position: relative;
     color: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    padding: 1rem;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 .recipe-card:hover {
-    transform: scale(1.08);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px -5px rgba(0,0,0,0.2);
 }
 
-.message-box {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 18px;
-}
+/* הודעות שגיאה / אין מתכונים */
+#recipesMessage, .message-box { text-align: center; margin-top: 2rem; font-size: 1.1rem; font-weight: 600; color: var(--text-muted); clear: both; }
+.reload-btn { background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; margin-top: 1rem; font-weight: bold; }
 
-.reload-btn {
-    margin-top: 15px;
-    padding: 8px 16px;
+/* ========================================== */
+/* כפתור הוספה צף (+ Add Recipe)              */
+/* ========================================== */
+
+.floating-add-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    border: none;
     cursor: pointer;
+    font-weight: 800;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.4);
+    transition: all 0.3s ease;
+    z-index: 90;
+}
+
+.floating-add-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-4px) scale(1.05);
 }
 
 /* ========================================== */
-/*             fullrecipe style              */
+/* הסתרת כפתורי עריכה/מחיקה זמניים שבתחתית    */
+/* ========================================== */
+#editRecipeIdInput,
+#editRecipeIdInput + button, /* מעלים את כפתור ה-Edit שמופיע מיד אחרי תיבת הטקסט */
+#deleteRecipeIdInput,
+#deleteRecipeBtn,
+#deleteMessage {
+    display: none !important;
+}
+
+
+/* ========================================== */
+/* מודאל הוספת מתכון (Add New Recipe)         */
+/* ========================================== */
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.overlay.hidden { display: none !important; }
+
+.modal {
+    background: var(--card-bg);
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    animation: slideUp 0.3s ease;
+}
+
+.modal-body br { display: none; }
+
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;
+}
+.modal-header h3 { margin: 0; color: var(--text-color); font-weight: 800; font-size: 1.5rem; }
+#closeModalBtn { background: none; border: none; color: var(--primary-color); font-size: 1.2rem; cursor: pointer; font-weight: bold;}
+
+.modal-body p { font-size: 0.8rem; color: var(--text-muted); margin-top: 0; margin-bottom: 1rem; }
+.modal-body label { display: block; color: var(--text-color); font-size: 0.9rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem; }
+
+.modal-body input[type="text"],
+.modal-body input[type="number"],
+.modal-body input[type="url"],
+.modal-body select,
+.modal-body textarea {
+    width: 100%; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color);
+    background-color: #f8fafc; font-family: inherit; font-size: 1rem; box-sizing: border-box;
+    transition: all 0.2s; outline: none;
+}
+.modal-body input:focus, .modal-body select:focus, .modal-body textarea:focus {
+    border-color: var(--primary-color); background-color: white; box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.15);
+}
+.modal-body textarea { min-height: 100px; resize: vertical; }
+
+/* קטגוריות טופס הוספה */
+#categoriesContainer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.pill {
+    display: inline-flex; align-items: center; padding: 0.5rem 1rem; border-radius: 2rem;
+    background-color: #fffaf7; color: var(--text-color); border: 1px solid #fed7aa; 
+    cursor: pointer; user-select: none; transition: all 0.2s; font-size: 0.9rem; font-weight: 600;
+}
+.pill input[type="checkbox"], .pill-checkbox { display: none !important; }
+.pill:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.pill.selected { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+
+/* מצרכים */
+.ingredient-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: stretch; }
+.ingredient-row input:first-of-type { flex: 1.5; } 
+.ingredient-row input:last-of-type { flex: 0.8; text-align: center;} 
+
+.removeBtn {
+    background-color: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0; border-radius: 0.5rem;
+    width: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    font-weight: bold; font-size: 1.2rem; transition: all 0.2s; padding: 0; flex-shrink: 0;
+}
+.removeBtn:hover { background-color: #fee2e2; color: #ef4444; border-color: #fca5a5; }
+.removeBtn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+#addIngredientBtn {
+    background: none; border: none; color: var(--primary-color); font-weight: 800; font-size: 0.9rem;
+    cursor: pointer; padding: 0.5rem 0; margin-top: 0.25rem; transition: color 0.2s;
+}
+#addIngredientBtn:hover { color: var(--primary-hover); text-decoration: underline; }
+
+.modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+#cancelRecipeBtn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; }
+.modal-footer button[type="submit"] { background: var(--primary-color); color: white; border: none; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);}
+
+
+/* ========================================== */
+/* חלון תצוגת מתכון מלא (Full View)           */
 /* ========================================== */
 #recipeFullOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+    display: flex; align-items: center; justify-content: center; z-index: 1000;
 }
+#recipeFullOverlay.hidden { display: none !important; }
 
 .recipe-full-container {
-    width: 70%;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    position: relative;
+    width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto;
+    background: var(--card-bg); border-radius: 1.5rem; padding: 2rem; position: relative;
 }
+
+#fullBackBtn {
+    position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.5); color: white;
+    border: none; padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; font-weight: bold; z-index: 10;
+}
+#fullBackBtn:hover { background: rgba(0,0,0,0.8); }
 
 .recipe-full-header {
-    height: 250px;
-    border-radius: 16px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: white;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    height: 300px; border-radius: 1rem; background-size: cover; background-position: center;
+    display: flex; align-items: flex-end; position: relative; color: white; margin-bottom: 2rem;
+    margin-top: -2rem; margin-left: -2rem; margin-right: -2rem; 
 }
-
 .recipe-full-header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    border-radius: 16px;
+    content: ""; position: absolute; inset: 0; border-radius: 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
-
-.recipe-full-header span {
-    position: relative;
-}
+.recipe-full-header span { position: relative; font-size: 2.5rem; font-weight: 900; padding: 1.5rem; z-index: 2; }
 
 .recipe-meta {
-    margin-bottom: 15px;
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+    background: #f8fafc; padding: 1rem; border-radius: 1rem;
 }
+.recipe-meta div { font-size: 0.95rem; color: var(--text-color);}
 
 .category-badge {
-    display: inline-block;
-    padding: 5px 10px;
-    background: #eee;
-    border-radius: 10px;
-    margin-right: 5px;
-    font-size: 14px;
+    display: inline-block; padding: 0.3rem 0.8rem; background: #fff4ed; color: var(--primary-color);
+    border-radius: 1rem; margin-right: 0.2rem; font-weight: 700; font-size: 0.8rem; border: 1px solid #fed7aa;
 }
 
-.difficulty-easy { color: green; }
-.difficulty-medium { color: orange; }
-.difficulty-hard { color: red; }
+.difficulty-easy { color: #10b981; font-weight: bold; }
+.difficulty-medium { color: #f59e0b; font-weight: bold;}
+.difficulty-hard { color: #ef4444; font-weight: bold;}
 
-.recipe-section-title {
-    margin-top: 20px;
-    font-weight: bold;
-    font-size: 18px;
-}
+.recipe-section-title { font-weight: 800; font-size: 1.25rem; color: var(--primary-color); margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #fff4ed; padding-bottom: 0.5rem; }
+.recipe-full-container ul { padding-left: 1.5rem; line-height: 1.8; color: var(--text-color); }
+.recipe-instructions { white-space: pre-line; line-height: 1.8; color: var(--text-color); font-size: 1.05rem; }
 
-.recipe-full-actions {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-}
-.recipe-instructions {
-    white-space: pre-line;
-}
+.recipe-full-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+#fullEditBtn { background: #f8fafc; border: 1px solid var(--border-color); color: var(--text-color); padding: 0.8rem 1.5rem; border-radius: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;}
+#fullEditBtn:hover { background: #f1f5f9; }
+#fullDeleteBtn { background: #fee2e2; color: #dc2626; border: none; padding: 0.8rem 1.5rem; border-radius: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;}
+#fullDeleteBtn:hover { background: #fca5a5; }
+
+/* אנימציות */
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInScale { from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

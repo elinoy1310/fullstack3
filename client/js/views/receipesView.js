@@ -302,6 +302,8 @@ const RecipesView = {
         });
 
         this.refreshMainView();
+
+        document.getElementById("filterPanel").classList.add("hidden");
     },
 
     applySort() {
@@ -343,6 +345,8 @@ const RecipesView = {
         });
 
         this.refreshMainView();
+
+        document.getElementById("sortPanel").classList.add("hidden");
     }
 };
 
@@ -527,6 +531,7 @@ const addRecipeView = {
                 addRecipeView.resetForm(false);
                 RecipesView.userRecipes.push(response.body.data);
 
+                setTimeout(() => addRecipeView.closeModal(), 1500);
             }
             else if (response.status === 0) {
                 message.classList.add("error");

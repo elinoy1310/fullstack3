@@ -1,66 +1,82 @@
-/* styles/css/auth.css */
-
+/* ========================================== */
+/* טופס התחברות / הרשמה (כמו בתמונה)          */
+/* ========================================== */
 .auth-container {
     max-width: 400px;
-    margin: 2rem auto;
-    padding: 2.5rem;
+    margin: 3rem auto;
+    padding: 3rem 2.5rem;
     background-color: var(--card-bg);
-    border-radius: 1rem; /* xl */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(238, 108, 43, 0.1);
+    border-radius: 1.25rem;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    border: 1px solid rgba(238, 108, 43, 0.05);
 }
 
 .auth-container h2 {
-    font-size: 1.875rem;
+    font-size: 2rem;
     font-weight: 900;
+    color: var(--text-color);
     margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-align: center;
 }
 
 .auth-container input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.2rem;
     margin-bottom: 1.25rem;
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
-    background-color: var(--bg-color);
+    background-color: #f8fafc; /* אפור בהיר מאוד כמו בתמונה */
     box-sizing: border-box;
     font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-color);
     transition: all 0.2s ease;
+    outline: none;
 }
 
 .auth-container input:focus {
-    outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.2);
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(238, 108, 43, 0.15);
 }
 
+/* כפתור כניסה מרכזי */
 .auth-container button[type="submit"], 
-.auth-container button#loginBtn {
+.auth-container button#loginBtn,
+.auth-container button#registerBtn {
     width: 100%;
-    padding: 0.875rem;
+    padding: 1rem;
     background-color: var(--primary-color);
     color: white;
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
     box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
-    transition: background 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .auth-container button[type="submit"]:hover, 
-.auth-container button#loginBtn:hover {
+.auth-container button#loginBtn:hover,
+.auth-container button#registerBtn:hover {
     background-color: var(--primary-hover);
 }
 
+.auth-container button[type="submit"]:active, 
+.auth-container button#loginBtn:active,
+.auth-container button#registerBtn:active {
+    transform: scale(0.98);
+}
+
+/* אזור ניווט תחתון (Don't have an account?) */
 #register-navigator, #login-navigator, #success-login-navigator {
     margin-top: 2rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-color);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     text-align: center;
 }
@@ -69,12 +85,18 @@
     background: none;
     border: none;
     color: var(--primary-color);
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 1rem;
     cursor: pointer;
-    padding: 0 0.25rem;
+    padding: 0;
+    margin-top: 0.5rem;
+    display: block;
+    width: 100%;
+    transition: color 0.2s;
 }
 
 #register-navigator button:hover, #login-navigator button:hover {
+    color: var(--primary-hover);
     text-decoration: underline;
 }
 
@@ -87,4 +109,5 @@
     font-weight: bold;
     cursor: pointer;
     width: 100%;
+    margin-top: 1rem;
 }

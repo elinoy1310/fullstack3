@@ -1,12 +1,10 @@
-/* styles/css/main.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;700&display=swap');
 
 :root {
-    --primary-color: #ee6c2b;
+    --primary-color: #ee6c2b; /* הכתום שלנו */
     --primary-hover: #d65a1f;
-    --bg-color: #f8f6f6;
-    --text-color: #0f172a;
+    --bg-color: #fdfbfb; /* רקע חמים קל */
+    --text-color: #1e293b;
     --text-muted: #64748b;
     --card-bg: #ffffff;
     --border-color: #e2e8f0;
@@ -19,46 +17,99 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.5;
-    /*direction: rtl; */
 }
 
+/* ========================================== */
+/* Header ראשי                                */
+/* ========================================== */
 .main-header {
-    background-color: rgba(248, 246, 246, 0.8);
+    background-color: rgba(253, 251, 251, 0.9);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(238, 108, 43, 0.1);
-    padding: 0.5rem 1rem;
+    padding: 1rem 2rem;
     position: sticky;
     top: 0;
-    z-index: 200; 
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-header h1 {
+.main-header h1 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 800;
     color: var(--primary-color);
 }
 
+#logoutBtn {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#logoutBtn:hover {
+    background-color: #f1f5f9;
+    color: var(--text-color);
+}
+
+/* ========================================== */
+/* אזורים ראשיים וכפתורי מסך כניסה            */
+/* ========================================== */
 #app, #entry-point {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 20px;
 }
 
-#entry-point { text-align: center; margin-top: 5rem; }
+#entry-point {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+#entry-point h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+#entry-point p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
 #entry-point button {
     background-color: var(--primary-color);
     color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
+    padding: 0.8rem 2rem;
+    border-radius: 0.75rem;
     border: none;
-    font-weight: bold;
+    font-weight: 800;
+    font-size: 1.1rem;
     cursor: pointer;
     margin: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
+#entry-point button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* ========================================== */
+/* מחלקות עזר כלליות                          */
+/* ========================================== */
 .hidden { display: none !important; }
 
+/* הודעות שגיאה והצלחה (כמו בתמונה) */
 .error {
     color: #dc2626;
     background-color: #fee2e2;
@@ -68,6 +119,7 @@ header h1 {
     margin-top: 1rem;
     font-size: 0.875rem;
     font-weight: 600;
+    text-align: center;
 }
 
 .success {
@@ -79,4 +131,5 @@ header h1 {
     margin-top: 1rem;
     font-size: 0.875rem;
     font-weight: 600;
+    text-align: center;
 }
