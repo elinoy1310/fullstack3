@@ -97,56 +97,6 @@ const RecipesView = {
 
     },
 
-    deleteRecipe(recipeId) {
-        if (!recipeId) {
-            alert("Please enter recipe ID");
-            return;
-        }
-        //after implementation of recipe full view we dont need to get the recipe again because we will have the data in the view, but for now we need to get the recipe to show the name in the confirm message
-        API.getRecipe(recipeId, function (response) {
-            const message = document.getElementById("deleteMessage");
-            if (response.status == 200) {
-                const recipe = response.body.data;
-
-                const confirmDelete = confirm(
-                    `Are you sure you want to delete "${recipe.title}"?`
-                );
-
-                if (!confirmDelete) return;
-                const messageEl = document.getElementById("deleteMessage");
-                messageEl.className = "";
-                messageEl.innerText = "Deleting...";
-                API.deleteRecipe(recipeId, function (response) {
-
-                    if (response.status === 200) {
-                        messageEl.className = "success";
-                        messageEl.innerText = `Recipe: ${recipe.title} deleted successfully!`;
-                        RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipeId);
-                        // change to do this after closing the full view because of the delete 
-                        RecipesView.refreshMainView();
-                    }
-                    else if (response.status === 0) {
-                        messageEl.className = "error";
-                        messageEl.innerText = "Network error";
-                    }
-                    else {
-                        messageEl.className = "error";
-                        messageEl.innerText = response.body.message;
-                    }
-                });
-            }
-            else if (response.status === 0) {
-                message.className = "error";
-                message.innerText = "Network error";
-            }
-            else {
-                message.className = "error";
-                message.innerText = response.body.message;
-            }
-
-        });
-    },
-
     loadUserRecipes(userId) {
 
         const messageBox = document.getElementById("recipesMessage");
@@ -369,6 +319,7 @@ const addRecipeView = {
         document.querySelector("#addRecipeForm button[type='submit']").innerText = "save";
         document.querySelector("#addRecipeForm #form-header").innerText = "Add New Recipe";
     },
+
     renderCategories() {
 
         const container = document.getElementById("categoriesContainer");
@@ -461,6 +412,7 @@ const addRecipeView = {
             btn.disabled = (list.children.length === 1);
         });
     },
+
     updateAddButtonState() {
         const list = document.getElementById("ingredientsList");
         const addBtn = document.getElementById("addIngredientBtn");
@@ -475,7 +427,6 @@ const addRecipeView = {
 
         addBtn.disabled = !allFilled;
     },
-
 
     saveRecipe() {
         const title = document.getElementById("recipeTitle").value.trim();
@@ -527,11 +478,9 @@ const addRecipeView = {
         API.createRecipe(recipeData, function (response) {
             if (response.status === 200) {
                 message.className = "success";
-                message.innerText = "Recipe added successfully!";
+                message.innerText = "Recipe added successfully! you can add another recipe or close this view.";
                 addRecipeView.resetForm(false);
                 RecipesView.userRecipes.push(response.body.data);
-
-                setTimeout(() => addRecipeView.closeModal(), 1500);
             }
             else if (response.status === 0) {
                 message.classList.add("error");
@@ -559,36 +508,25 @@ const editRecipeView = {
 
     originalData: null,
     currentRecipeId: null,
+    currentRecipe: null,
 
-    init(recipeId) {
+    init(recipe) {
 
-        API.getRecipe(recipeId, (response) => {
-            if (response.status === 200) {
-                const recipe = response.body.data;
-                this.currentRecipeId = recipeId;
-                this.originalData = JSON.stringify(recipe);
+        this.currentRecipeId = recipe.id;
+        this.currentRecipe = recipe;
+        this.originalData = recipe;
 
-                this.currentRecipeId = recipeId;
-                this.originalData = JSON.stringify(recipe);
+        const overlay = document.getElementById("addRecipeOverlay");
+        overlay.classList.remove("hidden");
 
-                const overlay = document.getElementById("addRecipeOverlay");
-                overlay.classList.remove("hidden");
+        document.getElementById("addRecipeBtn").classList.add("hidden");
 
-                document.getElementById("addRecipeBtn").classList.add("hidden");
-                // add for temp edit button - change this when recipe full view is implemented
-                document.getElementById("editRecipeIdInput").classList.add("hidden");
+        this.fillForm(recipe);
+        this.bindEvents();
 
-                this.fillForm(recipe);
-                this.bindEvents();
-
-                document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
-                document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
-            } else {
-                //need to change to write in message in recipes full view: divide to network error : status==0 and else
-                alert("Failed to load recipe");
-                return;
-            }
-        });
+        document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
+        document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
+        recipeFullView.close();
     },
 
     fillForm(recipe) {
@@ -659,12 +597,15 @@ const editRecipeView = {
     },
 
     hasUnsavedChanges() {
-        const original = JSON.parse(this.originalData);
+const original = structuredClone(this.originalData);
         delete original.ownerId
         delete original.createdAt
         delete original.id
         delete original.server
+        console.log("Original:", original);
+
         const currentData = this.collectFormData();
+        console.log("Current Data:", currentData);
         return JSON.stringify(currentData) !== JSON.stringify(original);
     },
 
@@ -685,13 +626,16 @@ const editRecipeView = {
         }
         message.className = "";
         message.innerText = "Loading...";
-
+        console.log(this.originalData)
+        console.log(this.currentRecipeId)
         API.updateRecipe(this.currentRecipeId, data, (response) => {
 
             if (response.status === 200) {
                 message.className = "success";
                 message.innerText = "Recipe updated successfully!";
-                this.originalData = JSON.stringify(response.body.data);
+                
+                this.originalData = response.body.data;
+                this.currentRecipe = response.body.data;
 
                 // 1. עדכון במערך המתכונים הראשי
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
@@ -705,10 +649,10 @@ const editRecipeView = {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;
                 }
 
-                setTimeout(() => {
-                    this.closeModal(); 
-                    recipeFullView.open(response.body.data); 
-                }, 1000); 
+                // setTimeout(() => {
+                //     this.closeModal();
+                    
+                // }, 1000);
 
             }
             else if (response.status === 0) {
@@ -728,8 +672,10 @@ const editRecipeView = {
             if (!confirm("Discard changes?")) return;
         }
 
-        this.reset();
         RecipesView.refreshMainView();
+        recipeFullView.open(this.originalData);
+        // recipeFullView.open(this.currentData);
+        this.reset();
     },
 
     reset() {
@@ -741,9 +687,11 @@ const editRecipeView = {
 
         document.getElementById("addRecipeForm").reset();
         document.getElementById("modalMessage").innerText = "";
+        document.getElementById("modalMessage").className = "";
 
         this.originalData = null;
         this.currentRecipeId = null;
+        
     }
 };
 
@@ -760,12 +708,6 @@ const recipeFullView = {
 
         overlay.classList.remove("hidden");
         document.body.style.overflow = "hidden";
-
-        // const imageStyle = recipe.image && recipe.image.trim() !== ""
-        //     ? `style="background-image: url('${recipe.image}')"`
-        //     : "";
-
-
 
         let difficultyClass = "";
         if (recipe.difficulty === "Easy") difficultyClass = "difficulty-easy";
@@ -802,28 +744,28 @@ const recipeFullView = {
 
             <div class="recipe-section-title">Instructions</div>
             <div class="recipe-instructions">
-    ${recipe.instructions}
-</div>
+             ${recipe.instructions}
+            </div>
         `;
         const header = content.querySelector(".recipe-full-header");
         header.style.backgroundImage = "";
-if (recipe.image) {
-    const img = new Image();
-    img.src = recipe.image
+        if (recipe.image) {
+            const img = new Image();
+            img.src = recipe.image
 
-    img.onload = () => {
-        header.style.backgroundImage = `url(${recipe.image})`;
-       
-    };
+            img.onload = () => {
+                header.style.backgroundImage = `url(${recipe.image})`;
 
-    img.onerror = () => {
-    //   console.log("Failed to load image, using default.");
-     header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
-    };
-} else {
-    // console.log("No image provided, using default.");
-    header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
-}
+            };
+
+            img.onerror = () => {
+                //   console.log("Failed to load image, using default.");
+                header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+            };
+        } else {
+            // console.log("No image provided, using default.");
+            header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
+        }
         this.bindActions();
     },
 
@@ -834,14 +776,43 @@ if (recipe.image) {
         };
 
         document.getElementById("fullEditBtn").onclick = () => {
-            this.close();
-            editRecipeView.init(this.currentRecipe.id);
+            editRecipeView.init(this.currentRecipe);
         };
 
         document.getElementById("fullDeleteBtn").onclick = () => {
-            RecipesView.deleteRecipe(this.currentRecipe.id);
-            this.close();
+            this.deleteRecipe();
         };
+    },
+
+    deleteRecipe() {
+            const message = document.getElementById("recipeFullMessage");
+                const recipe =this.currentRecipe
+
+                const confirmDelete = confirm(
+                    `Are you sure you want to delete "${recipe.title}"?`
+                );
+
+                if (!confirmDelete) return;
+                message.className = "";
+                message.innerText = "Deleting...";
+                API.deleteRecipe(recipe.id, function (response) {
+
+                    if (response.status === 200) {
+                        message.className = "success";
+                        message.innerText = `Recipe: ${recipe.title} deleted successfully!`;
+                        RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipe.id);
+                        recipeFullView.close();
+                        RecipesView.refreshMainView();
+                    }
+                    else if (response.status === 0) {
+                        message.className = "error";
+                        message.innerText = "Network error, try again.";
+                    }
+                    else {
+                        message.className = "error";
+                        message.innerText = response.body.message;
+                    }
+                });
     },
 
     close() {
@@ -849,6 +820,7 @@ if (recipe.image) {
             .classList.add("hidden");
         document.body.style.overflow = "auto";
     },
+
     showMessage(text, type = "error") {
         const messageEl = document.getElementById("recipeFullMessage");
         messageEl.className = "full-message " + type;
