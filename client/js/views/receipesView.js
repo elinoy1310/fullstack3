@@ -50,8 +50,6 @@ const RecipesView = {
                 addRecipeView.init();
             };
 
-        // ➖ DELETE Recipe  * temporary place to activate the function - need to change after recipe full view is completed
-
         // load user recipes
         this.loadUserRecipes(user.id);
 
@@ -164,8 +162,6 @@ const RecipesView = {
                 ? recipe.image
                 : DEFAULT_RECIPE_IMAGE;
 
-
-            // בדיקה אם התמונה נטענת
             const img = new Image();
 
             img.onload = () => {
@@ -266,7 +262,6 @@ const RecipesView = {
             let valueA = a[field];
             let valueB = b[field];
 
-            // 🟢 עדיפות למי שיש prepTime
             if (field === "prepTime") {
 
                 const hasA = valueA !== undefined && valueA !== null && valueA !== "";
@@ -323,7 +318,7 @@ const addRecipeView = {
     renderCategories() {
 
         const container = document.getElementById("categoriesContainer");
-        container.innerHTML = ""; // נקי לפני יצירה
+        container.innerHTML = "";
 
         RECIPE_CATEGORIES.forEach(cat => {
             const label = document.createElement("label");
@@ -508,12 +503,10 @@ const editRecipeView = {
 
     originalData: null,
     currentRecipeId: null,
-    currentRecipe: null,
 
     init(recipe) {
 
         this.currentRecipeId = recipe.id;
-        this.currentRecipe = recipe;
         this.originalData = recipe;
 
         const overlay = document.getElementById("addRecipeOverlay");
@@ -597,7 +590,7 @@ const editRecipeView = {
     },
 
     hasUnsavedChanges() {
-const original = structuredClone(this.originalData);
+        const original = structuredClone(this.originalData);
         delete original.ownerId
         delete original.createdAt
         delete original.id
@@ -633,10 +626,9 @@ const original = structuredClone(this.originalData);
             if (response.status === 200) {
                 message.className = "success";
                 message.innerText = "Recipe updated successfully!";
-                
-                this.originalData = response.body.data;
-                this.currentRecipe = response.body.data;
 
+                this.originalData = response.body.data;
+        
                 // 1. עדכון במערך המתכונים הראשי
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
                 if (index !== -1) {
@@ -648,11 +640,6 @@ const original = structuredClone(this.originalData);
                 if (filterIndex !== -1) {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;
                 }
-
-                // setTimeout(() => {
-                //     this.closeModal();
-                    
-                // }, 1000);
 
             }
             else if (response.status === 0) {
@@ -674,7 +661,6 @@ const original = structuredClone(this.originalData);
 
         RecipesView.refreshMainView();
         recipeFullView.open(this.originalData);
-        // recipeFullView.open(this.currentData);
         this.reset();
     },
 
@@ -691,7 +677,7 @@ const original = structuredClone(this.originalData);
 
         this.originalData = null;
         this.currentRecipeId = null;
-        
+
     }
 };
 
@@ -759,11 +745,9 @@ const recipeFullView = {
             };
 
             img.onerror = () => {
-                //   console.log("Failed to load image, using default.");
                 header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
             };
         } else {
-            // console.log("No image provided, using default.");
             header.style.backgroundImage = `url('${DEFAULT_RECIPE_IMAGE}')`;
         }
         this.bindActions();
@@ -785,34 +769,34 @@ const recipeFullView = {
     },
 
     deleteRecipe() {
-            const message = document.getElementById("recipeFullMessage");
-                const recipe =this.currentRecipe
+        const message = document.getElementById("recipeFullMessage");
+        const recipe = this.currentRecipe
 
-                const confirmDelete = confirm(
-                    `Are you sure you want to delete "${recipe.title}"?`
-                );
+        const confirmDelete = confirm(
+            `Are you sure you want to delete "${recipe.title}"?`
+        );
 
-                if (!confirmDelete) return;
-                message.className = "";
-                message.innerText = "Deleting...";
-                API.deleteRecipe(recipe.id, function (response) {
+        if (!confirmDelete) return;
+        message.className = "";
+        message.innerText = "Deleting...";
+        API.deleteRecipe(recipe.id, function (response) {
 
-                    if (response.status === 200) {
-                        message.className = "success";
-                        message.innerText = `Recipe: ${recipe.title} deleted successfully!`;
-                        RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipe.id);
-                        recipeFullView.close();
-                        RecipesView.refreshMainView();
-                    }
-                    else if (response.status === 0) {
-                        message.className = "error";
-                        message.innerText = "Network error, try again.";
-                    }
-                    else {
-                        message.className = "error";
-                        message.innerText = response.body.message;
-                    }
-                });
+            if (response.status === 200) {
+                message.className = "success";
+                message.innerText = `Recipe: ${recipe.title} deleted successfully!`;
+                RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipe.id);
+                recipeFullView.close();
+                RecipesView.refreshMainView();
+            }
+            else if (response.status === 0) {
+                message.className = "error";
+                message.innerText = "Network error, try again.";
+            }
+            else {
+                message.className = "error";
+                message.innerText = response.body.message;
+            }
+        });
     },
 
     close() {
