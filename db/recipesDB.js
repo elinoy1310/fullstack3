@@ -28,15 +28,15 @@ const RecipesDB = (function () {
     const defaultRecipes = [
         {
             id: 1,
-            ownerId: 1, // שייך למשתמש הראשון שיירשם במערכת
-            title: "פנקייק אוורירי מושלם",
+            ownerId: 1, // Belongs to the first registered user
+            title: "Perfect Fluffy Pancakes",
             ingredients: [
-                { name: "קמח לבן", amount: "1 כוס" },
-                { name: "חלב", amount: "1 כוס" },
-                { name: "ביצה", amount: "1" },
-                { name: "סוכר", amount: "2 כפות" }
+                { name: "White flour", amount: "1 cup" },
+                { name: "Milk", amount: "1 cup" },
+                { name: "Egg", amount: "1" },
+                { name: "Sugar", amount: "2 tablespoons" }
             ],
-            instructions: "1. מערבבים את הקמח והסוכר בקערה.\n2. מוסיפים את החלב והביצה וטורפים היטב עד שאין גושים.\n3. מחממים מחבת עם מעט חמאה.\n4. יוצקים מהבלילה ומטגנים כדקה מכל צד עד להזהבה.",
+            instructions: "1. Mix the flour and sugar in a bowl.\n2. Add the milk and egg and whisk well until there are no lumps.\n3. Heat a pan with a little butter.\n4. Pour some batter and fry for about a minute on each side until golden.",
             categories: ["Breakfast", "Vegetarian", "Dessert"],
             prepTime: "15",
             difficulty: "Easy",
@@ -45,21 +45,21 @@ const RecipesDB = (function () {
         },
         {
             id: 2,
-            ownerId: 1, // שייך למשתמש הראשון שיירשם במערכת
-            title: "פסטה ברוטב עגבניות טריות ושום",
+            ownerId: 1, // Belongs to the first registered user
+            title: "Pasta with Fresh Tomatoes and Garlic",
             ingredients: [
-                { name: "פסטה", amount: "500 גרם" },
-                { name: "עגבניות שרי", amount: "200 גרם" },
-                { name: "שום", amount: "3 שיניים" },
-                { name: "שמן זית", amount: "3 כפות" },
-                { name: "בזיליקום", amount: "חופן" }
+                { name: "Pasta", amount: "500 grams" },
+                { name: "Cherry tomatoes", amount: "200 grams" },
+                { name: "Garlic", amount: "3 cloves" },
+                { name: "Olive oil", amount: "3 tablespoons" },
+                { name: "Basil", amount: "A handful" }
             ],
-            instructions: "1. מבשלים את הפסטה בסיר עם מים מומלחים לפי ההוראות.\n2. במחבת גדולה, מטגנים את השום הפרוס בשמן זית על אש קטנה.\n3. מוסיפים את עגבניות השרי החצויות ומבשלים כ-10 דקות.\n4. מסננים את הפסטה, מעבירים למחבת, מוסיפים בזיליקום ומערבבים היטב.",
+            instructions: "1. Cook the pasta in a pot with salted water according to the package instructions.\n2. In a large pan, fry the sliced garlic in olive oil over low heat.\n3. Add the halved cherry tomatoes and cook for about 10 minutes.\n4. Drain the pasta, transfer to the pan, add basil, and mix well.",
             categories: ["Dinner", "Lunch", "Vegan"],
             prepTime: "30",
             difficulty: "Medium",
-            image: "https://udiosher.com/wp-content/uploads/2021/04/%D7%A4%D7%A1%D7%98%D7%94-%D7%91%D7%A8%D7%95%D7%98%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA-%D7%95%D7%A2%D7%93%D7%A9%D7%99%D7%9D.jpeg",
-            createdAt: new Date(Date.now() - 86400000).toISOString() // נוצר אתמול
+            image: "https://udiosher.com/wp-content/uploads/2021/04/%D7%A4%D7%A1%D7%98%D7%94-%D7%91%D7%A8%D7%95%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA-%D7%95%D7%A2%D7%93%D7%A9%D7%99%D7%9D.jpeg",
+            createdAt: new Date(Date.now() - 86400000).toISOString() // Created yesterday
         }
     ];
 
