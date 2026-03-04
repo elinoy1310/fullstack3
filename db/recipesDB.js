@@ -58,7 +58,7 @@ const RecipesDB = (function () {
             categories: ["Dinner", "Lunch", "Vegan"],
             prepTime: "30",
             difficulty: "Medium",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0rnd4BwsgiYjj3FYC14sN-dH6eePgXpX3xw&s",
+            image: "https://udiosher.com/wp-content/uploads/2021/04/%D7%A4%D7%A1%D7%98%D7%94-%D7%91%D7%A8%D7%95%D7%98%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA-%D7%95%D7%A2%D7%93%D7%A9%D7%99%D7%9D.jpeg",
             createdAt: new Date(Date.now() - 86400000).toISOString() // נוצר אתמול
         }
     ];
