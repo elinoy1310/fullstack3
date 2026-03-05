@@ -471,7 +471,6 @@
 
 }
 #addIngredientBtn {
-    /* border: 1px solid transparent; */
     transition: all 0.2s;
 }
 
@@ -521,29 +520,7 @@
     padding-bottom: 0;
 }
 
-/* #fullBackBtn {
-    position: absolute; 
-    top: 1.5rem; 
-    left: 1.5rem; 
-    background-color: var(--primary-color);
-    color: white;
-    border: 2px solid white;
-    padding: 0.6rem 1.5rem; 
-    border-radius: 2rem; 
-    cursor: pointer; 
-    font-weight: 800; 
-    font-size: 1rem;
-    z-index: 20; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-#fullBackBtn:hover { 
-    background-color: var(--primary-hover); 
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-} */
+
 .recipe-full-header {
     height: 300px; 
     border-radius: 1rem; 
@@ -679,34 +656,17 @@
     bottom: 0;
     background: var(--card-bg);
     padding-top: 1rem;
-    /* padding-bottom: 2rem; */
 }
-
-/* #fullBackBtn {
-    position: sticky;
-    top: 1.5rem;
-    right: 1.5rem;
-    left: auto;
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: var(--text-muted);
-    cursor: pointer;
-} */
 
 #fullBackBtn:hover {
     color: #ffe6d3;
 }
 #fullBackBtn {
-  /* position: sticky; */
   z-index: 100;
   background-color: white;
   border-radius: 30%;
   border-color: white;
   padding: 1px 5px;
-  /* top: 1.5rem;
-    left: auto; */
 }
 
 .message-box,
@@ -715,19 +675,10 @@
     margin-top: 1.5rem;
 }
 
-/* .overlay {
-    z-index: 150;
-}
-
-.main-header {
-    z-index: 2000;
-} */
-
 #recipeFullView {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    /* margin: 40px auto; */
 }
 
 .recipe-full-content {
