@@ -53,8 +53,7 @@ const API = {
         sendRequest("POST", "/recipes/add", { ...recipeData, server: Network.RECIPES_SERVER_NAME }, callback);
     },
     updateRecipe: function (id, data, callback) {
-        sendRequest("PUT", "/recipes/" + id, data, callback);
-    },
+        sendRequest("PUT", "/recipes/" + id, { ...data, requestingUserId: App.getUser().id }, callback);    },
     getRecipe: function (id, callback) {
         sendRequest("GET", "/recipes/" + id, null, callback);
     },
@@ -62,7 +61,7 @@ const API = {
         sendRequest("GET", "/recipes?userId=" + userId, null, callback);
     },
     deleteRecipe: function (id, callback) {
-        sendRequest("DELETE", "/recipes/" + id, null, callback);
+        sendRequest("DELETE", "/recipes/" + id, { requestingUserId: App.getUser().id }, callback);
     }
 
 };

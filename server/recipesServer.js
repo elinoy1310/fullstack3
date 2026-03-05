@@ -53,7 +53,8 @@ const RecipesServer = (function () {
         
         if (method === "DELETE" && url.startsWith("/recipes/")) {
             const id = parseInt(url.split("/")[2]);
-            return deleteRecipe(id);
+            const parsedBody = JSON.parse(body);
+            return deleteRecipe(id, parsedBody.requestingUserId);
         }
 
         return {
@@ -76,7 +77,11 @@ const RecipesServer = (function () {
     }
 
     //assumption: the recipeId is valid and exists in the db
-    function deleteRecipe(recipeId) {
+    function deleteRecipe(recipeId, requestingUserId) {
+        const recipe = RecipesDB.getByRecipeId(recipeId);
+        if (!recipe || recipe.ownerId !== requestingUserId) {
+             return error("Unauthorized: You don't have permission to delete this recipe");
+        }       
         const successDelete = RecipesDB.deleteRecipe(recipeId);
         if (!successDelete) {
             return error("Recipe not found or could not be deleted");
@@ -101,6 +106,10 @@ const RecipesServer = (function () {
         const recipe = RecipesDB.getByRecipeId(id);
         if (!recipe) {
             return error("Recipe not found")
+        }
+
+        if (recipe.ownerId !== data.requestingUserId) {
+            return error("Unauthorized: You don't have permission to update this recipe");
         }
 
         const updated = RecipesDB.update(id, data);
