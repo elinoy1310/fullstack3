@@ -117,7 +117,7 @@ const RecipesView = {
 
                 messageBox.innerHTML = `
                 <div class="message-box">
-                    Network error.
+                    Network error, try again.
                     <br>
                     <button class="reload-btn" id="reloadBtn">Reload</button>
                 </div>
@@ -469,7 +469,7 @@ const addRecipeView = {
 
         if (ingredients.length === 0) {
             message.className = "error";
-            message.innerText = "At least one ingredient required.";
+            message.innerText = "At least one ingredient is required.";
             return;
         }
 
@@ -500,7 +500,7 @@ const addRecipeView = {
             }
             else if (response.status === 0) {
                 message.classList.add("error");
-                message.innerText = "Network error. Try again.";
+                message.innerText = "Network error, try again.";
             }
             else {
                 message.classList.add("error");
@@ -633,7 +633,7 @@ const editRecipeView = {
 
         if (data.ingredients.length === 0) {
             message.className = "error";
-            message.innerText = "At least one ingredient required.";
+            message.innerText = "At least one ingredient is required.";
             return;
         }
         message.className = "";
@@ -644,7 +644,7 @@ const editRecipeView = {
 
             if (response.status === 200) {
                 message.className = "success";
-                message.innerText = "Recipe updated successfully!";
+                message.innerText = "Recipe updated successfully! you can continue editing or close this view and go back to the recipe's full view.";
 
                 this.originalData = response.body.data;
         
@@ -663,7 +663,7 @@ const editRecipeView = {
             }
             else if (response.status === 0) {
                 message.className = "error";
-                message.innerText = "Network error.";
+                message.innerText = "Network error, try again.";
             }
             else {
                 message.className = "error";
