@@ -2,6 +2,7 @@ const AddRecipeView = {
     init() {
         const overlay = document.getElementById("addRecipeOverlay");
         overlay.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
         IngredientsManager.init();
         renderCategoryList("categoriesContainer", { styleClass: "pill", checkboxClass: "pill-checkbox", interactive: true });
         document.getElementById("addIngredientBtn").onclick = () => IngredientsManager.addIngredientRow();
@@ -31,6 +32,7 @@ const AddRecipeView = {
         }
         document.getElementById("addRecipeOverlay").classList.add("hidden");
         document.getElementById("addRecipeBtn").classList.remove("hidden");
+        document.body.style.overflow = "auto";
         AddRecipeView.resetForm();
         RecipesView.refreshMainView(false);
     },

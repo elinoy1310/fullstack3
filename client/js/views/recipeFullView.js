@@ -10,6 +10,9 @@ const RecipeFullView = {
 
         overlay.classList.remove("hidden");
         document.body.style.overflow = "hidden";
+        document.getElementById("recipeFullMessage").classList.remove("error", "success");
+        document.getElementById("recipeFullMessage").classList.add("hidden");
+
 
         let difficultyClass = "";
         if (recipe.difficulty === "Easy") difficultyClass = "difficulty-easy";
@@ -108,8 +111,8 @@ const RecipeFullView = {
                 RecipesView.userRecipes = RecipesView.userRecipes.filter(r => r.id !== recipe.id);
                 setTimeout(() => {
                 RecipeFullView.close();
-                RecipesView.refreshMainView();
-                },900);
+                RecipesView.refreshMainView(false);
+                },1000);
             }
             else if (response.status === 0) {
                 message.className = "error";
