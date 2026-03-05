@@ -1,27 +1,3 @@
-/*
-network.js
-
-Role: Simulated network layer.
-Communicates with: fajax.js, authServer.js, recipesServer.js
-
-Responsibilities:
-
-Route request to correct server
-
-Add random delay (1–3 sec)
-
-Randomly drop request (e.g. 20%)
-
-Important functions:
-
-send(message)
-
-deliver(message)
-
-simulateDelay()
-
-shouldDrop()
-*/
 const DROP_RATE = 0.2; // range: 0.1 - 0.5
 
 const Network = (function () {
@@ -38,7 +14,6 @@ const Network = (function () {
                 return;
             }
 
-            // how to route to correct server: authServer or recipesServer? 
             let response = null;
             if (request.url === "/login" || request.url === "/register") {
                 response = AuthServer.handleRequest(request);

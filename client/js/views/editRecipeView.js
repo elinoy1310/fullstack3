@@ -131,11 +131,6 @@ const EditRecipeView = {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;
                 }
 
-                // //closing the modal
-                // setTimeout(() => {
-                //     this.closeModal();
-                // }, 1000); 
-
             }
             else if (response.status === 0) {
                 message.className = "error";

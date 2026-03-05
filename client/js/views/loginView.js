@@ -13,7 +13,7 @@ const LoginView = {
             API.login(email, password, function (response) {
 
                 if (response.status === 200) {
-                    App.setUser(response.body.data); //check what data contains maybe we need only the id : change if needded after the charactarization of the main page of the receipes
+                    App.setUser(response.body.data); 
                     messageEl.classList.add("success");
                     messageEl.innerText = "Login success!";
                     setTimeout(() => {
