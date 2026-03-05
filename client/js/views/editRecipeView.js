@@ -112,21 +112,26 @@ const EditRecipeView = {
 
             if (response.status === 200) {
                 message.className = "success";
-                message.innerText = "Recipe updated successfully! you can continue editing or close this view and go back to the recipe's full view.";
+                message.innerText = "Recipe updated successfully!"; // קיצרנו את ההודעה כי החלון ייסגר מיד
 
                 this.originalData = response.body.data;
 
-                // update in the viewws data
+                // update in userRecipes array
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
                 if (index !== -1) {
                     RecipesView.userRecipes[index] = response.body.data;
                 }
 
-                //update in the filtered list if exists there
+                // update in filteredRecipes array
                 const filterIndex = RecipesView.filteredRecipes.findIndex(r => r.id === this.currentRecipeId);
                 if (filterIndex !== -1) {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;
                 }
+
+                //closing the modal
+                setTimeout(() => {
+                    this.closeModal();
+                }, 1000); 
 
             }
             else if (response.status === 0) {
