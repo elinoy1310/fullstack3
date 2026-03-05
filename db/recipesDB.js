@@ -44,7 +44,7 @@ const RecipesDB = (function () {
         },
         {
             id: 2,
-            ownerId: 1,
+            ownerId: 2,
             title: "Pasta with Fresh Tomatoes and Garlic",
             ingredients: [
                 { name: "Pasta", amount: "500 grams" },
@@ -62,7 +62,7 @@ const RecipesDB = (function () {
         },
         {
             id: 3,
-            ownerId: 1, 
+            ownerId: 2, 
             title: "Classic Morning Shakshuka",
             ingredients: [
                 { name: "Ripe tomatoes", amount: "5 large" },
@@ -80,7 +80,7 @@ const RecipesDB = (function () {
         },
         {
             id: 4,
-            ownerId: 1, 
+            ownerId: 3, 
             title: "Fresh Italian Caprese Salad",
             ingredients: [
                 { name: "Tomatoes", amount: "3 large" },
@@ -98,7 +98,7 @@ const RecipesDB = (function () {
         },
         {
             id: 5,
-            ownerId: 1, 
+            ownerId: 3, 
             title: "Classic Chocolate Chip Cookies",
             ingredients: [
                 { name: "Softened butter", amount: "100g" },
