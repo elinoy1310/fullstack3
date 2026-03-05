@@ -10,15 +10,18 @@ const EditRecipeView = {
 
         const overlay = document.getElementById("addRecipeOverlay");
         overlay.classList.remove("hidden");
-
+        document.getElementById("modalMessage").classList.remove("error", "success");
+        document.getElementById("modalMessage").classList.add("hidden");
+        
         document.getElementById("addRecipeBtn").classList.add("hidden");
-
+        
         this.fillForm(recipe);
         this.bindEvents();
-
+        
         document.querySelector("#addRecipeForm button[type='submit']").innerText = "update";
         document.querySelector("#addRecipeForm #form-header").innerText = "Edit Recipe";
         RecipeFullView.close();
+        document.body.style.overflow = "hidden";
     },
 
     fillForm(recipe) {
@@ -112,7 +115,7 @@ const EditRecipeView = {
 
             if (response.status === 200) {
                 message.className = "success";
-                message.innerText = "Recipe updated successfully!"; // קיצרנו את ההודעה כי החלון ייסגר מיד
+                message.innerText = "Recipe updated successfully! you can continue editing or close this view and go back to the recipe's full view.";
 
                 this.originalData = response.body.data;
 
@@ -128,10 +131,10 @@ const EditRecipeView = {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;
                 }
 
-                //closing the modal
-                setTimeout(() => {
-                    this.closeModal();
-                }, 1000); 
+                // //closing the modal
+                // setTimeout(() => {
+                //     this.closeModal();
+                // }, 1000); 
 
             }
             else if (response.status === 0) {
@@ -153,6 +156,7 @@ const EditRecipeView = {
 
         RecipesView.refreshMainView(false);
         RecipeFullView.open(this.originalData);
+        document.body.style.overflow = "auto";
         this.reset();
     },
 
@@ -162,7 +166,9 @@ const EditRecipeView = {
 
         document.getElementById("addRecipeForm").reset();
         document.getElementById("modalMessage").innerText = "";
-        document.getElementById("modalMessage").className = "";
+        document.getElementById("modalMessage").className = "hidden";
+        document.getElementById("modalMessage").classList.remove("error", "success");
+        document.getElementById("modalMessage").classList.add("hidden");
 
         this.originalData = null;
         this.currentRecipeId = null;
