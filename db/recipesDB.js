@@ -58,9 +58,82 @@ const RecipesDB = (function () {
             categories: ["Dinner", "Lunch", "Vegan"],
             prepTime: "30",
             difficulty: "Medium",
-            image: "https://udiosher.com/wp-content/uploads/2021/04/%D7%A4%D7%A1%D7%98%D7%94-%D7%91%D7%A8%D7%95%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA-%D7%95%D7%A2%D7%93%D7%A9%D7%99%D7%9D.jpeg",
+            image: "https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2020/10/27174522/%D7%A1%D7%A4%D7%92%D7%98%D7%99-%D7%A2%D7%9D-%D7%A8%D7%95%D7%98%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA1.jpg",
             createdAt: new Date(Date.now() - 86400000).toISOString() // Created yesterday
+        },
+        {
+            id: 3,
+            ownerId: 1, 
+            title: "Classic Morning Shakshuka",
+            ingredients: [
+                { name: "Ripe tomatoes", amount: "5 large" },
+                { name: "Eggs", amount: "4" },
+                { name: "Garlic", amount: "3 cloves" },
+                { name: "Sweet paprika", amount: "1 tbsp" },
+                { name: "Olive oil", amount: "3 tbsp" }
+            ],
+            instructions: "1. Chop the garlic and fry lightly in a large pan with olive oil.\n2. Dice the tomatoes and add to the pan. Cook for about 15 minutes until soft.\n3. Season with paprika, salt, and pepper.\n4. Make small wells in the sauce, crack the eggs into them, and cook for another 5-7 minutes until the egg whites are set.",
+            categories: ["Breakfast", "Vegetarian", "One-Pot", "Healthy"],
+            prepTime: "25",
+            difficulty: "Easy",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyMIWVcgxFYXHErPvlwOZGALpXHPJuNRN8gA&s",
+            createdAt: new Date(Date.now() - 5000000).toISOString()
+        },
+        {
+            id: 4,
+            ownerId: 1, 
+            title: "Fresh Italian Caprese Salad",
+            ingredients: [
+                { name: "Tomatoes", amount: "3 large" },
+                { name: "Fresh Mozzarella cheese", amount: "1 large ball" },
+                { name: "Basil leaves", amount: "A handful" },
+                { name: "Balsamic glaze", amount: "2 tbsp" },
+                { name: "Olive oil", amount: "2 tbsp" }
+            ],
+            instructions: "1. Slice the tomatoes and mozzarella ball into thin, even slices.\n2. Arrange them alternately on a beautiful serving plate.\n3. Scatter the fresh basil leaves on top.\n4. Season with coarse salt and black pepper, then drizzle generously with olive oil and balsamic glaze.",
+            categories: ["Lunch", "Healthy", "Vegetarian", "No-Bake", "Low-Carb"],
+            prepTime: "10",
+            difficulty: "Easy",
+            image: "https://i.ytimg.com/vi/oy4kj2c0LhI/maxresdefault.jpg",
+            createdAt: new Date().toISOString()
+        },
+        {
+            id: 5,
+            ownerId: 1, 
+            title: "Classic Chocolate Chip Cookies",
+            ingredients: [
+                { name: "Softened butter", amount: "100g" },
+                { name: "Brown sugar", amount: "1/2 cup" },
+                { name: "Egg", amount: "1" },
+                { name: "Flour", amount: "1.5 cups" },
+                { name: "Chocolate chips", amount: "1 cup" }
+            ],
+            instructions: "1. Preheat oven to 180°C (350°F).\n2. Cream the butter and sugar together in a bowl.\n3. Add the egg and mix well.\n4. Gently fold in the flour and chocolate chips.\n5. Form small balls, place on a baking sheet, and bake for 10-12 minutes.",
+            categories: ["Dessert", "Snack", "Baked", "Vegetarian"],
+            prepTime: "20",
+            difficulty: "Easy",
+            image: "https://www.kipa.co.il/userFiles/2026/03/735-415/1_541bdee27e5f3492d049d2997d37d9ac.jpg",
+            createdAt: new Date(Date.now() - 15000000).toISOString()
+        },
+        {
+            id: 6,
+            ownerId: 1, 
+            title: "Oven-Baked Lemon Herb Salmon",
+            ingredients: [
+                { name: "Salmon fillets", amount: "4 pieces" },
+                { name: "Olive oil", amount: "2 tbsp" },
+                { name: "Fresh lemon juice", amount: "2 tbsp" },
+                { name: "Minced garlic", amount: "2 cloves" },
+                { name: "Salt and pepper", amount: "To taste" }
+            ],
+            instructions: "1. Preheat oven to 200°C (400°F).\n2. Arrange the salmon fillets on a lined baking sheet.\n3. In a small bowl, mix olive oil, lemon juice, garlic, salt, and pepper.\n4. Brush the mixture generously over the fish.\n5. Bake for 12-15 minutes until the fish flakes easily with a fork.",
+            categories: ["Dinner", "Healthy", "Baked", "Gluten-Free", "Low-Carb"],
+            prepTime: "20",
+            difficulty: "Medium",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjmrczDcbP3LW0ucHqn7a85x7rCEdlj16YQ&s",
+            createdAt: new Date().toISOString()
         }
+
     ];
 
     function getAll() {
