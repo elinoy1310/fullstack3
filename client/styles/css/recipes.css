@@ -1,7 +1,3 @@
-/* ========================================== */
-/* עיצוב כללי למסך המתכונים                   */
-/* ========================================== */
-
 .recipes-header {
     display: flex;
     justify-content: space-between;
@@ -22,7 +18,6 @@
     min-height: 60vh;
 }
 
-/* שורת חיפוש */
 .search-bar {
     margin-bottom: 1.5rem;
 }
@@ -45,10 +40,7 @@
     box-shadow: 0 0 0 3px rgba(238, 108, 43, 0.15);
 }
 
-/* ========================================== */
-/* כפתורי סרגל כלים: Filter | Sort | Reset    */
-/* ========================================== */
-
+/* Filter | Sort | Reset */
 #openFilterBtn, #openSortBtn, #resetBtn {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -70,21 +62,17 @@
     background-color: #fffaf7;
 }
 
-/* כפתור הריסט - הוזז לצד ימין */
 #resetBtn {
     border-color: #fecaca;
     color: #dc2626;
-    float: right; /* דוחף את הכפתור לקצה הימני של המסך */
+    float: right;
 }
 
 #resetBtn:hover {
     background-color: #fee2e2;
 }
 
-/* ========================================== */
-/* פאנל סינון ומיון (Modals מרחפים!)          */
-/* ========================================== */
-
+/*Modals*/
 .side-panel {
     position: fixed; 
     top: 50%;
@@ -133,7 +121,6 @@
     color: var(--primary-color);
 }
 
-/* כפתורי שמירה בתוך הפאנלים (Apply) */
 #applyFilterBtn, #applySortBtn {
     width: 100%;
     background-color: var(--primary-color);
@@ -152,7 +139,6 @@
 #applyFilterBtn:hover, #applySortBtn:hover { background-color: var(--primary-hover); }
 #applyFilterBtn:active, #applySortBtn:active { transform: scale(0.98); }
 
-/* ---- עיצוב פנימי לפילטר ---- */
 #filterCategories {
     display: flex;
     flex-wrap: wrap; 
@@ -198,21 +184,16 @@
 }
 #filterMinTime:focus, #filterMaxTime:focus { border-color: var(--primary-color); }
 
-/* ---- עיצוב פנימי למיון (Sort) ---- */
-/* #sortPanel div { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; } */
 #sortPanel label { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 600; }
 #sortPanel input[type="radio"] { accent-color: var(--primary-color); width: 1.2rem; height: 1.2rem; cursor: pointer; }
 
 
-/* ========================================== */
-/* גריד וכרטיסיות מתכונים                     */
-/* ========================================== */
-
+/*grid*/
 .recipes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
-    clear: both; /* מוודא שהגריד יושב מתחת לכפתור ה-Reset שהוזז ימינה */
+    clear: both;
 }
 
 .recipe-card {
@@ -252,14 +233,10 @@
     box-shadow: 0 15px 25px -5px rgba(0,0,0,0.2);
 }
 
-/* הודעות שגיאה / אין מתכונים */
 #recipesMessage, .message-box { text-align: center; margin-top: 2rem; font-size: 1.1rem; font-weight: 600; color: var(--text-muted); clear: both; }
 .reload-btn { background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.5rem; cursor: pointer; margin-top: 1rem; font-weight: bold; }
 
-/* ========================================== */
-/* כפתור הוספה צף (+ Add Recipe)              */
-/* ========================================== */
-
+/*Add Recipe*/
 .floating-add-btn {
     position: fixed;
     bottom: 30px;
@@ -282,21 +259,15 @@
     transform: translateY(-4px) scale(1.05);
 }
 
-/* ========================================== */
-/* הסתרת כפתורי עריכה/מחיקה זמניים שבתחתית    */
-/* ========================================== */
+
 #editRecipeIdInput,
-#editRecipeIdInput + button, /* מעלים את כפתור ה-Edit שמופיע מיד אחרי תיבת הטקסט */
+#editRecipeIdInput + button,
 #deleteRecipeIdInput,
 #deleteRecipeBtn,
 #deleteMessage {
     display: none !important;
 }
 
-
-/* ========================================== */
-/* מודאל הוספת מתכון (Add New Recipe)         */
-/* ========================================== */
 
 .overlay {
     position: fixed;
@@ -318,7 +289,7 @@
     max-height: 85vh;
     overflow-y: auto;
     border-radius: 1.5rem;
-    padding: 0; /* הורדנו את הפדינג מכאן כדי שהכותרת תידבק לקצה */
+    padding: 0;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
     animation: slideUp 0.3s ease;
@@ -332,32 +303,55 @@
     justify-content: space-between; 
     align-items: center;
     border-bottom: 1px solid var(--border-color); 
-    padding: 1.5rem 2rem 1rem 2rem; /* החזרנו את הפדינג הפנימי לכותרת */
-    position: sticky; /* הופך את הכותרת לדביקה */
+    padding: 1.5rem 2rem 1rem 2rem;
+    position: sticky;
     top: 0;
-    background-color: var(--card-bg); /* צבע אטום כדי שהטקסט הנגלל לא ייראה מאחורה */
-    z-index: 50; /* תמיד מעל התוכן הנגלל */
+    background-color: var(--card-bg);
+    z-index: 50;
 }
 .modal-header h3 { margin: 0; color: var(--text-color); font-weight: 800; font-size: 1.5rem; }
 #closeModalBtn { background: none; border: none; color: var(--primary-color); font-size: 1.2rem; cursor: pointer; font-weight: bold;}
 
 .modal-body {
-    padding: 1rem 2rem; /* הוספנו את הפדינג הפנימי לתוכן */
+    padding: 1rem 2rem;
 }
 
-.modal-body p { font-size: 0.8rem; color: var(--text-muted); margin-top: 0; margin-bottom: 1rem; }
-.modal-body label { display: block; color: var(--text-color); font-size: 0.9rem; font-weight: 800; margin-top: 1rem; margin-bottom: 0.5rem; }
+.modal-body p { 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    margin-top: 0; 
+    margin-bottom: 1rem; 
+}
+
+.modal-body label { 
+    display: block; 
+    color: var(--text-color); 
+    font-size: 0.9rem; 
+    font-weight: 800; 
+    margin-top: 1rem; 
+    margin-bottom: 0.5rem; 
+}
+
 .modal-body input[type="text"],
 .modal-body input[type="number"],
 .modal-body input[type="url"],
 .modal-body select,
 .modal-body textarea {
-    width: 100%; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-color);
-    background-color: #f8fafc; font-family: inherit; font-size: 1rem; box-sizing: border-box;
-    transition: all 0.2s; outline: none;
+    width: 100%; 
+    padding: 1rem; 
+    border-radius: 0.75rem; 
+    border: 1px solid var(--border-color);
+    background-color: #f8fafc; 
+    font-family: inherit; 
+    font-size: 1rem; 
+    box-sizing: border-box;
+    transition: all 0.2s; 
+    outline: none;
 }
 .modal-body input:focus, .modal-body select:focus, .modal-body textarea:focus {
-    border-color: var(--primary-color); background-color: white; box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.15);
+    border-color: var(--primary-color); 
+    background-color: white; 
+    box-shadow: 0 0 0 2px rgba(238, 108, 43, 0.15);
 }
 .modal-body textarea { min-height: 100px; resize: vertical; }
 
@@ -365,53 +359,140 @@
     display: flex; 
     justify-content: flex-end; 
     gap: 1rem; 
-    padding: 1.5rem 2rem; /* הוספנו פדינג */
+    padding: 1.5rem 2rem;
     border-top: 1px solid var(--border-color); 
     background-color: var(--card-bg);
 }
 
 
-#cancelRecipeBtn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; }
-.modal-footer button[type="submit"] { background: var(--primary-color); color: white; border: none; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);}
+#cancelRecipeBtn { 
+    background: transparent; 
+    color: var(--text-muted); 
+    border: 1px solid var(--border-color); 
+    padding: 0.75rem 1.5rem; 
+    border-radius: 0.75rem; 
+    font-weight: 700; 
+    cursor: pointer; 
+}
 
-/* קטגוריות טופס הוספה */
-#categoriesContainer { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.modal-footer button[type="submit"] { 
+    background: var(--primary-color); 
+    color: white; 
+    border: none; 
+    padding: 0.75rem 2rem; 
+    border-radius: 0.75rem; 
+    font-weight: 800; 
+    cursor: pointer; 
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);}
+
+#categoriesContainer { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 0.5rem; 
+    margin-bottom: 1rem; 
+}
+
 .pill {
-    display: inline-flex; align-items: center; padding: 0.5rem 1rem; border-radius: 2rem;
-    background-color: #fffaf7; color: var(--text-color); border: 1px solid #fed7aa; 
-    cursor: pointer; user-select: none; transition: all 0.2s; font-size: 0.9rem; font-weight: 600;
+    display: inline-flex; 
+    align-items: center; 
+    padding: 0.5rem 1rem; 
+    border-radius: 2rem;
+    background-color: #fffaf7; 
+    color: var(--text-color); 
+    border: 1px solid #fed7aa; 
+    cursor: pointer; 
+    user-select: none; 
+    transition: all 0.2s; 
+    font-size: 0.9rem; 
+    font-weight: 600;
 }
 .pill input[type="checkbox"], .pill-checkbox { display: none !important; }
-.pill:hover { border-color: var(--primary-color); color: var(--primary-color); }
-.pill.selected { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+.pill:hover { 
+    border-color: var(--primary-color); 
+    color: var(--primary-color); 
+}
 
-/* מצרכים */
-.ingredient-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: stretch; }
+.pill.selected { 
+    background-color: var(--primary-color); 
+    color: white; 
+    border-color: var(--primary-color); 
+}
+
+/* ingredient */
+.ingredient-row { 
+    display: flex; 
+    gap: 0.5rem; 
+    margin-bottom: 0.5rem; 
+    align-items: stretch; 
+}
 .ingredient-row input:first-of-type { flex: 1.5; } 
 .ingredient-row input:last-of-type { flex: 0.8; text-align: center;} 
 
 .removeBtn {
-    background-color: #f1f5f9; color: #94a3b8; border: 1px solid #e2e8f0; border-radius: 0.5rem;
-    width: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-weight: bold; font-size: 1.2rem; transition: all 0.2s; padding: 0; flex-shrink: 0;
+    background-color: #f1f5f9; 
+    color: #94a3b8; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 0.5rem;
+    width: 45px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer;
+    font-weight: bold; 
+    font-size: 1.2rem; 
+    transition: all 0.2s; 
+    padding: 0; 
+    flex-shrink: 0;
 }
-.removeBtn:hover { background-color: #fee2e2; color: #ef4444; border-color: #fca5a5; }
+.removeBtn:hover { 
+    background-color: #fee2e2; 
+    color: #ef4444; 
+    border-color: #fca5a5; 
+}
 .removeBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 #addIngredientBtn {
-    background: none; border: none; color: var(--primary-color); font-weight: 800; font-size: 0.9rem;
-    cursor: pointer; padding: 0.5rem 0; margin-top: 0.25rem; transition: color 0.2s;
+    background: none; 
+    border: none; 
+    color: var(--primary-color); 
+    font-weight: 800; 
+    font-size: 0.9rem;
+    cursor: pointer; 
+    padding: 0.5rem 0; 
+    margin-top: 0.25rem; 
+    transition: color 0.2s;
 }
 #addIngredientBtn:hover { color: var(--primary-hover); text-decoration: underline; }
 
-.modal-footer { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
-#cancelRecipeBtn { background: transparent; color: var(--text-muted); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 700; cursor: pointer; }
-.modal-footer button[type="submit"] { background: var(--primary-color); color: white; border: none; padding: 0.75rem 2rem; border-radius: 0.75rem; font-weight: 800; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);}
+.modal-footer { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 1rem; 
+    margin-top: 1.5rem; 
+    padding-top: 1.5rem; 
+    border-top: 1px solid var(--border-color); 
+}
+#cancelRecipeBtn { 
+    background: transparent; 
+    color: var(--text-muted); 
+    border: 1px solid var(--border-color); 
+    padding: 0.75rem 1.5rem; 
+    border-radius: 0.75rem; 
+    font-weight: 700; 
+    cursor: pointer; 
+}
+.modal-footer button[type="submit"] { 
+    background: var(--primary-color); 
+    color: white; 
+    border: none; 
+    padding: 0.75rem 2rem; 
+    border-radius: 0.75rem; 
+    font-weight: 800; 
+    cursor: pointer; 
+    box-shadow: 0 10px 15px -3px rgba(238, 108, 43, 0.2);
+}
 
 
-/* ========================================== */
-/* חלון תצוגת מתכון מלא (Full View)           */
-/* ========================================== */
 #recipeFullOverlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
     display: flex; align-items: center; justify-content: center; z-index: 1000;
@@ -427,64 +508,140 @@
     position: absolute; 
     top: 1.5rem; 
     left: 1.5rem; 
-    background-color: var(--primary-color); /* צבע כתום בולט */
+    background-color: var(--primary-color);
     color: white;
-    border: 2px solid white; /* מסגרת לבנה ליצירת קונטרסט מול התמונה */
+    border: 2px solid white;
     padding: 0.6rem 1.5rem; 
     border-radius: 2rem; 
     cursor: pointer; 
     font-weight: 800; 
     font-size: 1rem;
     z-index: 20; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* הצללה חזקה יותר */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     transition: all 0.3s ease;
-    text-transform: uppercase; /* אותיות גדולות באנגלית כדי שיהיה קריא יותר */
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 #fullBackBtn:hover { 
     background-color: var(--primary-hover); 
-    transform: translateY(-2px) scale(1.05); /* אנימציית קפיצה קטנה */
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 8px 20px rgba(0,0,0,0.6);
 }
 .recipe-full-header {
-    height: 300px; border-radius: 1rem; background-size: cover; background-position: center;
-    display: flex; align-items: flex-end; position: relative; color: white; margin-bottom: 2rem;
-    margin-top: -2rem; margin-left: -2rem; margin-right: -2rem; 
+    height: 300px; 
+    border-radius: 1rem; 
+    background-size: cover; 
+    background-position: center;
+    display: flex; 
+    align-items: flex-end; 
+    position: relative; 
+    color: white; 
+    margin-bottom: 2rem;
+    margin-top: -2rem; 
+    margin-left: -2rem; 
+    margin-right: -2rem; 
 }
 .recipe-full-header::before {
-    content: ""; position: absolute; inset: 0; border-radius: 1rem;
+    content: ""; 
+    position: absolute; 
+    inset: 0; 
+    border-radius: 1rem;
     background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
-.recipe-full-header span { position: relative; font-size: 2.5rem; font-weight: 900; padding: 1.5rem; z-index: 2; }
+.recipe-full-header span { 
+    position: relative; 
+    font-size: 2.5rem; 
+    font-weight: 900; 
+    padding: 1.5rem; 
+    z-index: 2; 
+}
 
 .recipe-meta {
-    display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
-    background: #f8fafc; padding: 1rem; border-radius: 1rem;
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 1rem; 
+    margin-bottom: 2rem;
+    background: #f8fafc; 
+    padding: 1rem; 
+    border-radius: 1rem;
 }
 .recipe-meta div { font-size: 0.95rem; color: var(--text-color);}
 
 .category-badge {
-    display: inline-block; padding: 0.3rem 0.8rem; background: #fff4ed; color: var(--primary-color);
-    border-radius: 1rem; margin-right: 0.2rem; font-weight: 700; font-size: 0.8rem; border: 1px solid #fed7aa;
+    display: inline-block; 
+    padding: 0.3rem 0.8rem; 
+    background: #fff4ed; 
+    color: var(--primary-color);
+    border-radius: 1rem; 
+    margin-right: 0.2rem; 
+    font-weight: 700; 
+    font-size: 0.8rem; 
+    border: 1px solid #fed7aa;
 }
 
 .difficulty-easy { color: #10b981; font-weight: bold; }
 .difficulty-medium { color: #f59e0b; font-weight: bold;}
 .difficulty-hard { color: #ef4444; font-weight: bold;}
 
-.recipe-section-title { font-weight: 800; font-size: 1.25rem; color: var(--primary-color); margin-top: 2rem; margin-bottom: 1rem; border-bottom: 2px solid #fff4ed; padding-bottom: 0.5rem; }
-.recipe-full-container ul { padding-left: 1.5rem; line-height: 1.8; color: var(--text-color); }
-.recipe-instructions { white-space: pre-line; line-height: 1.8; color: var(--text-color); font-size: 1.05rem; }
+.recipe-section-title { 
+    font-weight: 800; 
+    font-size: 1.25rem; 
+    color: var(--primary-color); 
+    margin-top: 2rem; 
+    margin-bottom: 1rem; 
+    border-bottom: 2px solid #fff4ed; 
+    padding-bottom: 0.5rem; 
+}
+.recipe-full-container ul { 
+    padding-left: 1.5rem; 
+    line-height: 1.8; 
+    color: var(--text-color); 
+}
+.recipe-instructions { 
+    white-space: pre-line; 
+    line-height: 1.8; 
+    color: var(--text-color); 
+    font-size: 1.05rem; 
+}
 
-.recipe-full-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
-#fullEditBtn { background: #f8fafc; border: 1px solid var(--border-color); color: var(--text-color); padding: 0.8rem 1.5rem; border-radius: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;}
+.recipe-full-actions { 
+    display: flex; 
+    justify-content: flex-end; 
+    gap: 1rem; 
+    margin-top: 3rem; 
+    border-top: 1px solid var(--border-color); 
+    padding-top: 1.5rem; 
+}
+#fullEditBtn { 
+    background: #f8fafc; 
+    border: 1px solid var(--border-color); 
+    color: var(--text-color); 
+    padding: 0.8rem 1.5rem; 
+    border-radius: 0.75rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: all 0.2s;
+}
 #fullEditBtn:hover { background: #f1f5f9; }
-#fullDeleteBtn { background: #fee2e2; color: #dc2626; border: none; padding: 0.8rem 1.5rem; border-radius: 0.75rem; font-weight: bold; cursor: pointer; transition: all 0.2s;}
+#fullDeleteBtn { 
+    background: #fee2e2; 
+    color: #dc2626; 
+    border: none; 
+    padding: 0.8rem 1.5rem; 
+    border-radius: 0.75rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: all 0.2s;
+}
 #fullDeleteBtn:hover { background: #fca5a5; }
 
-/* אנימציות */
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeInScale { from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+/* animations */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInScale { 
+    from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); } 
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 

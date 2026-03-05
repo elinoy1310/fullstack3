@@ -1,4 +1,3 @@
-// app.js
 const App = (function () {
 
     let currentUser = null;
@@ -27,13 +26,13 @@ const App = (function () {
         });
     }
 
-    // שמירת המשתמש ב-sessionStorage ובזיכרון מקומי בזמן הריצה
+    //save user in memory and sessionStorage for persistence across reloads
     function setUser(user) {
-        currentUser = user; // משתנה זמני בזמן הריצה
-        sessionStorage.setItem('currentUser', JSON.stringify(user)); // שמירה ב-sessionStorage
+        currentUser = user; 
+        sessionStorage.setItem('currentUser', JSON.stringify(user)); // save in sessionStorage
     }
 
-    // קבלת המשתמש: קודם מנסה מהזיכרון, אם אין – מנסה sessionStorage
+    // get user from memory or sessionStorage
     function getUser() {
         if (currentUser) return currentUser;
 
@@ -43,7 +42,7 @@ const App = (function () {
             return currentUser;
         }
 
-        return null; // אם אין משתמש בכלל
+        return null; // if no user
     }
 
     return {

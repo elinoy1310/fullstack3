@@ -116,13 +116,13 @@ const EditRecipeView = {
 
                 this.originalData = response.body.data;
 
-                // 1. עדכון במערך המתכונים הראשי
+                // update in the viewws data
                 const index = RecipesView.userRecipes.findIndex(r => r.id === this.currentRecipeId);
                 if (index !== -1) {
                     RecipesView.userRecipes[index] = response.body.data;
                 }
 
-                // 2. **התיקון:** עדכון במערך המתכונים שמוצג על המסך! (כדי שהתמונה תשתנה מיד)
+                //update in the filtered list if exists there
                 const filterIndex = RecipesView.filteredRecipes.findIndex(r => r.id === this.currentRecipeId);
                 if (filterIndex !== -1) {
                     RecipesView.filteredRecipes[filterIndex] = response.body.data;

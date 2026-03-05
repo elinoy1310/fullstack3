@@ -1,6 +1,3 @@
-/* ========================================== */
-/* טופס התחברות / הרשמה (כמו בתמונה)          */
-/* ========================================== */
 .auth-container {
     max-width: 400px;
     margin: 3rem auto;
@@ -26,7 +23,7 @@
     margin-bottom: 1.25rem;
     border: 1px solid var(--border-color);
     border-radius: 0.5rem;
-    background-color: #f8fafc; /* אפור בהיר מאוד כמו בתמונה */
+    background-color: #f8fafc;
     box-sizing: border-box;
     font-family: inherit;
     font-size: 1rem;
@@ -41,7 +38,6 @@
     box-shadow: 0 0 0 3px rgba(238, 108, 43, 0.15);
 }
 
-/* כפתור כניסה מרכזי */
 .auth-container button[type="submit"], 
 .auth-container button#loginBtn,
 .auth-container button#registerBtn {
@@ -71,7 +67,7 @@
     transform: scale(0.98);
 }
 
-/* אזור ניווט תחתון (Don't have an account?) */
+/*footer */
 #register-navigator, #login-navigator, #success-login-navigator {
     margin-top: 2rem;
     padding-top: 1.5rem;

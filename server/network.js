@@ -25,9 +25,6 @@ shouldDrop()
 const DROP_RATE = 0.1; // range: 0.1 - 0.5
 
 const Network = (function () {
-    // const AUTH_SERVER_NAME = "auth";
-    // const RECIPES_SERVER_NAME = "recipes";
-
     function send(request, callback) {
 
         const delay = Math.floor(Math.random() * 2000) + 1000;
@@ -54,8 +51,6 @@ const Network = (function () {
     }
 
     return {
-        // AUTH_SERVER_NAME,
-        // RECIPES_SERVER_NAME,
         send
     };
 

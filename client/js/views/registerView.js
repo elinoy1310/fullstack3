@@ -39,7 +39,7 @@ const RegisterView = {
                 } 
                 else {
                     messageEl.className = "error";
-                    // חייבים לפענח את ה-JSON שחוזר מהשרת לפני שקוראים את ה-message
+                    // Try to extract error message from response, but fallback to generic message if parsing fails
                     try {
                         
                         const bodyData = response.body;

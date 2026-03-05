@@ -24,11 +24,10 @@ const RecipesDB = (function () {
 
     const STORAGE_KEY = "recipes";
 
-    // ---- המתכונים הקבועים שלנו ----
     const defaultRecipes = [
         {
             id: 1,
-            ownerId: 1, // Belongs to the first registered user
+            ownerId: 1,
             title: "Perfect Fluffy Pancakes",
             ingredients: [
                 { name: "White flour", amount: "1 cup" },
@@ -45,7 +44,7 @@ const RecipesDB = (function () {
         },
         {
             id: 2,
-            ownerId: 1, // Belongs to the first registered user
+            ownerId: 1,
             title: "Pasta with Fresh Tomatoes and Garlic",
             ingredients: [
                 { name: "Pasta", amount: "500 grams" },
@@ -59,7 +58,7 @@ const RecipesDB = (function () {
             prepTime: "30",
             difficulty: "Medium",
             image: "https://d3o5sihylz93ps.cloudfront.net/wp-content/uploads/2020/10/27174522/%D7%A1%D7%A4%D7%92%D7%98%D7%99-%D7%A2%D7%9D-%D7%A8%D7%95%D7%98%D7%91-%D7%A2%D7%92%D7%91%D7%A0%D7%99%D7%95%D7%AA1.jpg",
-            createdAt: new Date(Date.now() - 86400000).toISOString() // Created yesterday
+            createdAt: new Date(Date.now() - 86400000).toISOString()
         },
         {
             id: 3,
@@ -151,7 +150,6 @@ const RecipesDB = (function () {
             }
         });
 
-        // שומרים רק אם הוספנו משהו חדש
         if (addedNew) {
             save(recipes);
         }
@@ -187,7 +185,7 @@ const RecipesDB = (function () {
         recipes[index] = {
             ...recipes[index],
             ...data,
-            id // לוודא שלא משתנה
+            id
         };
 
         save(recipes);
