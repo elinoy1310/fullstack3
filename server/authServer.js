@@ -37,14 +37,7 @@ const AuthServer = (function () {
         };
     }
 
-    function register(data) {
-//data: { username, email, password }
-// need to check: UsersDB.getByUsername(data.email)
-//             UsersDB.create({
-        //     email: data.email,
-        //     username: data.username,
-        //     password: data.password
-        // });     
+    function register(data) {    
         if (!data.username ||!data.email || !data.password) {
             return error("Missing fields");
         }
@@ -72,7 +65,9 @@ const AuthServer = (function () {
         if (user.password !== data.password) {
             return error("Invalid credentials: wrong password");
         }
-
+        //credinals are not neccessary for response
+        delete user.password; 
+        delete user.email; 
         return success(user);
     }
 

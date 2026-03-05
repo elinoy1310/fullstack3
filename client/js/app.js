@@ -2,14 +2,14 @@
 const App = (function () {
 
     let currentUser = null;
-    
+
     function init() {
         const route = window.location.hash.replace("#", "");
 
         if (route) {
             Router.render(route);
         }
-        
+
         window.onhashchange = function () {
 
             const newRoute = window.location.hash.replace("#", "");
@@ -27,12 +27,23 @@ const App = (function () {
         });
     }
 
+    // שמירת המשתמש ב-sessionStorage ובזיכרון מקומי בזמן הריצה
     function setUser(user) {
-        currentUser = user;
+        currentUser = user; // משתנה זמני בזמן הריצה
+        sessionStorage.setItem('currentUser', JSON.stringify(user)); // שמירה ב-sessionStorage
     }
 
+    // קבלת המשתמש: קודם מנסה מהזיכרון, אם אין – מנסה sessionStorage
     function getUser() {
-        return currentUser;
+        if (currentUser) return currentUser;
+
+        const storedUser = sessionStorage.getItem('currentUser');
+        if (storedUser) {
+            currentUser = JSON.parse(storedUser);
+            return currentUser;
+        }
+
+        return null; // אם אין משתמש בכלל
     }
 
     return {
@@ -43,4 +54,4 @@ const App = (function () {
 
 })();
 
-document.addEventListener("DOMContentLoaded", function () {App.init();});
+document.addEventListener("DOMContentLoaded", function () { App.init(); });
