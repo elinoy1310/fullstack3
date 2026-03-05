@@ -51,7 +51,7 @@
     font-weight: 700;
     font-size: 0.9rem;
     margin-right: 0.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.02);
 }
@@ -194,6 +194,7 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5rem;
     clear: both;
+    margin-bottom: 60px;
 }
 
 .recipe-card {

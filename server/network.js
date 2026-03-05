@@ -22,7 +22,7 @@ simulateDelay()
 
 shouldDrop()
 */
-const DROP_RATE = 0.1; // range: 0.1 - 0.5
+const DROP_RATE = 0.2; // range: 0.1 - 0.5
 
 const Network = (function () {
     function send(request, callback) {

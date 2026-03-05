@@ -21,44 +21,45 @@ const UsersDB = (function () {
 
     const STORAGE_KEY = "users"; 
 
-    const defaultUsers = [
-        {
-            id: 1,
-            username: "Master Chef",
-            email: "admin@recipe.com",
-            password: "123"
-        },
-        {
-            id: 2,
-            username: "Baking Queen",
-            email: "baker@recipe.com",
-            password: "123"
-        },
-        {
-            id: 3,
-            username: "Vegan Ninja",
-            email: "vegan@recipe.com",
-            password: "123"
-        }
-    ];
+    // const defaultUsers = [
+    //     {
+    //         id: 1,
+    //         username: "Master Chef",
+    //         email: "admin@recipe.com",
+    //         password: "1234"
+    //     },
+    //     {
+    //         id: 2,
+    //         username: "Baking Queen",
+    //         email: "baker@recipe.com",
+    //         password: "1234"
+    //     },
+    //     {
+    //         id: 3,
+    //         username: "Vegan Ninja",
+    //         email: "vegan@recipe.com",
+    //         password: "1234"
+    //     }
+    // ];
 
     function getAll() {
-        let users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        let addedNew = false;
+        // let users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        // let addedNew = false;
 
-        defaultUsers.forEach(defaultUser => {
-            const exists = users.find(u => u.email === defaultUser.email);
-            if (!exists) {
-                users.push(defaultUser);
-                addedNew = true;
-            }
-        });
+        // defaultUsers.forEach(defaultUser => {
+        //     const exists = users.find(u => u.email === defaultUser.email);
+        //     if (!exists) {
+        //         users.push(defaultUser);
+        //         addedNew = true;
+        //     }
+        // });
 
-        if (addedNew) {
-            save(users);
-        }
+        // if (addedNew) {
+        //     save(users);
+        // }
 
-        return users;
+        // return users;
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
     }
 
     function save(users) {

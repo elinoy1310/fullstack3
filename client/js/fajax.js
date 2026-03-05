@@ -1,40 +1,18 @@
-/*
-📄 fajax.js
-
-Role: Fake AJAX implementation.
-Communicates with: network.js
-
-Main component:
-Class FXMLHttpRequest
-
-Important methods:
-
-open(method, url)
-
-send(body)
-
-onreadystatechange
-
-status
-
-responseText
-
-Each request:
-
-Creates new FXMLHttpRequest
-
-Sends JSON string
-
-Waits asynchronously for response
-*/
+// XMLHttpRequest status codes
+const UNSENT = 0;
+const OPENED = 1;
+const HEADERS_RECEIVED = 2; // Not used in this simulation because headers are not processed
+const LOADING = 3; // Not used because the simulated response is returned in a single step
+const DONE = 4;
 
 class FXMLHttpRequest {
 
     constructor() {
         this.method = null;
         this.url = null;
+        this.onerror = null;
         this.onreadystatechange = null;
-        this.readyState = 0;
+        this.readyState = UNSENT;
         this.status = 0;
         this.responseText = null;
     }
@@ -42,6 +20,12 @@ class FXMLHttpRequest {
     open(method, url) {
         this.method = method;
         this.url = url;
+
+        this.readyState = OPENED;
+
+        if (this.onreadystatechange) {
+            this.onreadystatechange();
+        }
     }
 
     send(body) {
@@ -57,12 +41,17 @@ class FXMLHttpRequest {
             if (!response) {
                 this.status = 0;
                 this.responseText = JSON.stringify({ message: "Network error" });
+                if (this.onerror) {
+                    this.onerror();
+                }
+
+                return;
             } else {
                 this.status = response.status;
                 this.responseText = response.body;
             }
 
-            this.readyState = 4;
+            this.readyState = DONE;
 
             if (this.onreadystatechange) {
                 this.onreadystatechange();

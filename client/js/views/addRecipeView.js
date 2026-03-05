@@ -17,6 +17,9 @@ const AddRecipeView = {
         document.getElementById("addRecipeBtn").classList.add("hidden");
         document.querySelector("#addRecipeForm button[type='submit']").innerText = "save";
         document.querySelector("#addRecipeForm #form-header").innerText = "Add New Recipe";
+
+        document.getElementById("modalMessage").classList.remove("error", "success");
+        document.getElementById("modalMessage").classList.add("hidden");
     },
 
     hasUnsavedChanges() {

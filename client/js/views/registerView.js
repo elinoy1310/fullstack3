@@ -24,8 +24,7 @@ const RegisterView = {
                     messageEl.innerText = "Registration successful! Redirecting to login...";
                     
                     document.getElementById("login-navigator").classList.add("hidden");
-                    document.getElementById("success-login-navigator").classList.remove("hidden");
-                    
+
                     document.getElementById("registerBtn").classList.add("hidden");
 
                     setTimeout(() => {
@@ -41,7 +40,6 @@ const RegisterView = {
                     messageEl.className = "error";
                     // Try to extract error message from response, but fallback to generic message if parsing fails
                     try {
-                        
                         const bodyData = response.body;
                         messageEl.innerText = bodyData.message || "Registration failed.";
                     } catch (err) {
