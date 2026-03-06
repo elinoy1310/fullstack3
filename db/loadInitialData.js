@@ -100,6 +100,77 @@ const defaultRecipes = [
         difficulty: "Medium",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWjmrczDcbP3LW0ucHqn7a85x7rCEdlj16YQ&s",
         createdAt: new Date().toISOString()
+    },
+    {
+        ownerId: 1,
+        title: "Green Detox Smoothie",
+        ingredients: [
+            { name: "Spinach", amount: "1 cup" },
+            { name: "Green apple", amount: "1/2" },
+            { name: "Banana", amount: "1" },
+            { name: "Almond milk", amount: "1 cup" },
+            { name: "Chia seeds", amount: "1 tbsp" }
+        ],
+        instructions: "1. Core and slice the apple.\n2. Add all ingredients into a blender.\n3. Blend on high until perfectly smooth.\n4. Serve immediately over ice.",
+        categories: ["Breakfast", "Healthy", "Vegan", "No-Bake"],
+        prepTime: "5",
+        difficulty: "Easy",
+        image: "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600&q=80",
+        createdAt: new Date().toISOString()
+    },
+    {
+        ownerId: 2,
+        title: "Fudgy Chocolate Brownies",
+        ingredients: [
+            { name: "Dark chocolate", amount: "200g" },
+            { name: "Butter", amount: "150g" },
+            { name: "Sugar", amount: "1 cup" },
+            { name: "Eggs", amount: "3" },
+            { name: "Flour", amount: "1/2 cup" },
+            { name: "Cocoa powder", amount: "1/4 cup" }
+        ],
+        instructions: "1. Preheat oven to 180°C.\n2. Melt butter and chocolate together in a microwave or double boiler.\n3. Whisk sugar and eggs into the chocolate mixture.\n4. Fold in flour and cocoa powder until just combined.\n5. Pour into a lined baking pan and bake for 25-30 minutes.",
+        categories: ["Dessert", "Baked", "Vegetarian"],
+        prepTime: "40",
+        difficulty: "Medium",
+        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&q=80",
+        createdAt: new Date(Date.now() - 3600000).toISOString()
+    },
+    {
+        ownerId: 2,
+        title: "Homemade Blueberry Muffins",
+        ingredients: [
+            { name: "Flour", amount: "2 cups" },
+            { name: "Sugar", amount: "3/4 cup" },
+            { name: "Baking powder", amount: "2 tsp" },
+            { name: "Milk", amount: "1/2 cup" },
+            { name: "Oil", amount: "1/2 cup" },
+            { name: "Egg", amount: "1" },
+            { name: "Fresh blueberries", amount: "1.5 cups" }
+        ],
+        instructions: "1. Preheat oven to 200°C and line a muffin tin.\n2. Mix dry ingredients in one bowl, and wet ingredients in another.\n3. Combine wet and dry ingredients gently (do not overmix).\n4. Fold in the blueberries.\n5. Divide batter into muffin cups and bake for 15-20 minutes until golden.",
+        categories: ["Breakfast", "Dessert", "Baked", "Vegetarian"],
+        prepTime: "30",
+        difficulty: "Easy",
+        image: "https://images.unsplash.com/photo-1607958996333-41aef7bc655c?w=600&q=80",
+        createdAt: new Date(Date.now() - 86400000).toISOString()
+    },
+    {
+        ownerId: 3,
+        title: "Creamy Vegan Sweet Potato Soup",
+        ingredients: [
+            { name: "Sweet potatoes", amount: "3 large" },
+            { name: "Onion", amount: "1" },
+            { name: "Vegetable broth", amount: "4 cups" },
+            { name: "Coconut milk", amount: "1 can" },
+            { name: "Olive oil", amount: "2 tbsp" }
+        ],
+        instructions: "1. Chop the onion and cube the sweet potatoes.\n2. Sauté the onion in olive oil until soft.\n3. Add sweet potatoes and broth, bring to a boil, then simmer for 20 minutes.\n4. Blend until smooth.\n5. Stir in coconut milk and season to taste.",
+        categories: ["Dinner", "Lunch", "Vegan", "Healthy", "One-Pot"],
+        prepTime: "35",
+        difficulty: "Easy",
+        image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80",
+        createdAt: new Date(Date.now() - 5000000).toISOString()
     }
 
 ];
