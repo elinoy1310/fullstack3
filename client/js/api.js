@@ -32,8 +32,6 @@ const API = {
 
 
 function sendRequest(method, url, data, callback) {
-    console.log("API.sendRequest", { method, url, data });
-
     const xhr = new FXMLHttpRequest();
 
     xhr.open(method, url);

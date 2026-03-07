@@ -193,11 +193,5 @@ const defaultUsers = [
     }
 ];
 
-defaultRecipes.forEach(recipe => {
-    const created = RecipesDB.create(recipe)
-    console.log("recipe with the id: " + created.id + " was added")
-})
-defaultUsers.forEach(user => {
-    const created = UsersDB.create(user)
-    console.log("user with the id: " + created.userId + " was added")
-})
+defaultRecipes.forEach(recipe => { RecipesDB.create(recipe) })
+defaultUsers.forEach(user => { UsersDB.create(user) })
