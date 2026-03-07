@@ -103,7 +103,7 @@ const RecipesView = {
         const container = document.getElementById("recipesContainer");
 
         container.innerHTML = "";
-        messageBox.innerHTML = "Loading...";
+        messageBox.innerHTML = '<div class="loader"></div>';
 
         API.getUsersRecipes(userId, (response) => {
 
@@ -180,14 +180,38 @@ const RecipesView = {
         };
 
         img.src = imageUrl;
+        
+        const heartIcon = recipe.isFavorite ? "❤️" : "🤍";
+        
         card.innerHTML = `
+            <button class="favorite-btn" title="Add to favorites">${heartIcon}</button>
             <div class="recipe-card-title">
                 ${recipe.title}
             </div>
         `;
 
+        const favBtn = card.querySelector(".favorite-btn");
+        favBtn.onclick = (e) => {
+            e.stopPropagation();
+            
+            //update UI immediately for better UX
+            recipe.isFavorite = !recipe.isFavorite;
+            favBtn.innerHTML = recipe.isFavorite ? "❤️" : "🤍";
+            
+            // send to server
+            const user = App.getUser();
+            const updateData = { ...recipe, requestingUserId: user.id };
+            
+            API.updateRecipe(recipe.id, updateData, (response) => {
+                if (response.status !== 200) {
+                    recipe.isFavorite = !recipe.isFavorite;
+                    favBtn.innerHTML = recipe.isFavorite ? "❤️" : "🤍";
+                    alert("Network error, couldn't save favorite status.");
+                }
+            });
+        };
+
         card.onclick = () => {
-            console.log("Recipe with ID:", recipe.id);
             RecipeFullView.open(recipe);
         };
         return card;

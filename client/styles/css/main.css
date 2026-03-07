@@ -65,7 +65,14 @@ body {
 
 #entry-point {
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 8vh;
+    padding: 6rem 2rem;
+    border-radius: 1.5rem;
+    background-image: linear-gradient(rgba(253, 251, 251, 0.85), rgba(253, 251, 251, 0.85)), url('../images/main\ screen\ image.png');
+    
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
 #entry-point h2 {
@@ -126,4 +133,27 @@ body {
     font-size: 0.875rem;
     font-weight: 600;
     text-align: center;
+}
+
+/*animations for the entry point*/
+#entry-point h2 {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid #f26b21;
+    margin: 0 auto;
+    
+    animation: 
+        typing 2.5s steps(22, end),
+        blink-caret 0.8s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: #f26b21; }
 }
