@@ -1,3 +1,7 @@
+/*
+Elinoy Damari 325984318
+Michal Zanzuri 214848590 
+*/
 const App = (function () {
 
     let currentUser = null;
@@ -10,7 +14,6 @@ const App = (function () {
         }
 
         window.onhashchange = function () {
-
             const newRoute = window.location.hash.replace("#", "");
             Router.render(newRoute);
         };

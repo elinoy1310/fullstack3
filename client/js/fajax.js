@@ -1,3 +1,8 @@
+/*
+Elinoy Damari 325984318
+Michal Zanzuri 214848590 
+*/
+
 // XMLHttpRequest status codes
 const UNSENT = 0;
 const OPENED = 1;

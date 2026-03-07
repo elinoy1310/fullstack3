@@ -1,3 +1,8 @@
+/*
+Elinoy Damari 325984318
+Michal Zanzuri 214848590 
+*/
+
 const DROP_RATE = 0.2; // range: 0.1 - 0.5
 
 const Network = (function () {
